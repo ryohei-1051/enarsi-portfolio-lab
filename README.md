@@ -21,14 +21,12 @@ I use **GNS3 (primary)** and **Packet Tracer (supporting)** to design, implement
 - **Operational artifacts:** verification checklist, change plan, and rollback approach to mirror real operations
 
 ### Quick links
-- Start here: `docs/routing-design.md`
-- Baseline verification: `docs/verification-checklist.md`
-- Incident index: `incidents/README.md`
-- docs/routing-design.md
-- docs/verification-checklist.md
-- docs/command-set.md
-- incidents/README.md
-- ops/README.md
+- Start here: [docs/routing-design.md](docs/routing-design.md)
+- Baseline verification: [docs/verification-checklist.md](docs/verification-checklist.md)
+- Recommended show commands: [docs/command-set.md](docs/command-set.md)
+- Incident index: [incidents/README.md](incidents/README.md)
+- Ops artifacts: [ops/README.md](ops/README.md)
+
 
 ---
 
