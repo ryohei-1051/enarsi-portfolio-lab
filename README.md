@@ -24,6 +24,11 @@ I use **GNS3 (primary)** and **Packet Tracer (supporting)** to design, implement
 - Start here: `docs/routing-design.md`
 - Baseline verification: `docs/verification-checklist.md`
 - Incident index: `incidents/README.md`
+- docs/routing-design.md
+- docs/verification-checklist.md
+- docs/command-set.md
+- incidents/README.md
+- ops/README.md
 
 ---
 
