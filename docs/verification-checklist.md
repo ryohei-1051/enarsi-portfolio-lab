@@ -1,0 +1,8 @@
+- `show ip int brief` (target interfaces are **up/up**)
+- `ping` to the directly-connected peer (link reachability)
+- `show ip ospf neighbor` (neighbors are **FULL**)
+- `show ip ospf interface <if>` (area / auth / hello-dead / MTU)
+- `show ip route ospf` (expected OSPF routes installed)
+- `traceroute` (expected path)
+- *(Optional)* link down/up to validate convergence (IP SLA / track if used)
+- 
