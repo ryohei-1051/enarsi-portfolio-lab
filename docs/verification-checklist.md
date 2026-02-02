@@ -1,3 +1,4 @@
+# Baseline Verification Checklist (docs/verification-checklist.md)
 - `show ip int brief` (target interfaces are **up/up**)
 - `ping` to the directly-connected peer (link reachability)
 - `show ip ospf neighbor` (neighbors are **FULL**)
