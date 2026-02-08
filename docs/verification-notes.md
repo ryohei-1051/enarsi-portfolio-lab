@@ -21,13 +21,15 @@ This file logs each baseline milestone (v0.x) with what was validated and where 
 ---
 
 ## v0.2-ospf (OSPF over DMVPN Phase 2)
-- Goal:
+- Result:
   - OSPF neighbors FULL between HQ1 and all spokes over Tunnel0
   - Loopback routes exchanged via OSPF (10.255.x.x/32)
-- Evidence (to be created): `evidence/baseline/v0.2-ospf/`
-- Configs (to be created): `configs/baseline/v0.2-ospf/`
-- Key checks (target):
+  - Reachability validated with ping/traceroute (including spoke-to-spoke via HQ1 as expected for Phase 2)
+- Evidence: `evidence/baseline/v0.2-ospf/`
+- Configs: `configs/baseline/v0.2-ospf/`
+- Key checks:
   - `show ip ospf neighbor`
+  - `show ip ospf interface tunnel0`
   - `show ip route ospf`
   - `ping/traceroute` between loopbacks (e.g., BR1 → DC1/BR2)
-- Next: v0.3 add EIGRP over DMVPN (or compare OSPF vs EIGRP behavior) 
+- Next: v0.3 add EIGRP over DMVPN (or compare OSPF vs EIGRP behavior)
