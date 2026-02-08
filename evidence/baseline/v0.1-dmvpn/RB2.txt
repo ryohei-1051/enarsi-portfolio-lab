@@ -1,0 +1,82 @@
+RB2#
+RB2#show ip int brief
+Interface                  IP-Address
+GigabitEthernet0/0         192.0.2.5
+GigabitEthernet0/1         unassigned
+GigabitEthernet0/2         unassigned
+GigabitEthernet0/3         unassigned
+Tunnel0                    10.10.10.5
+RB2#
+RB2#
+RB2#show interface tunnel0
+Tunnel0 is up, line protocol is up
+  Hardware is Tunnel
+  Description: DMVPN-PH2-SPOKE
+  Internet address is 10.10.10.5/24
+  MTU 17916 bytes, BW 100 Kbit/sec, DLY
+     reliability 255/255, txload 1/255,
+  Encapsulation TUNNEL, loopback not set
+  Keepalive not set
+  Tunnel linestate evaluation up
+  Tunnel source 192.0.2.5 (GigabitEthern
+   Tunnel Subblocks:
+      src-track:
+         Tunnel0 source tracking subbloc
+          Set of tunnels with source Gig <OK>
+  Tunnel protocol/transport multi-GRE/IP
+    Key disabled, sequencing disabled
+    Checksumming of packets disabled
+  Tunnel TTL 255, Fast tunneling enabled
+  Tunnel transport MTU 1476 bytes
+  Tunnel transmit bandwidth 8000 (kbps)
+  Tunnel receive bandwidth 8000 (kbps)
+  Last input 00:00:21, output 00:00:21,
+  Last clearing of "show interface" coun
+  Input queue: 0/75/0/0 (size/max/drops/
+  Queueing strategy: fifo
+  Output queue: 0/0 (size/max)
+  5 minute input rate 0 bits/sec, 0 pack
+  5 minute output rate 0 bits/sec, 0 pac
+     22 packets input, 2903 bytes, 0 no
+     Received 0 broadcasts (0 IP multica
+     0 runts, 0 giants, 0 throttles
+     0 input errors, 0 CRC, 0 frame, 0 o
+     47 packets output, 5988 bytes, 0 un
+     0 output errors, 0 collisions, 0 in
+     0 unknown protocol drops
+     0 output buffer failures, 0 output
+RB2#
+RB2#
+RB2#show dmvpn
+Legend: Attrb --> S - Static, D - Dynami
+        N - NATed, L - Local, X - No Soc
+        T1 - Route Installed, T2 - Nexth
+        C - CTS Capable, I2 - Temporary
+        # Ent --> Number of NHRP entries
+        NHS Status: E --> Expecting Repl
+        UpDn Time --> Up or Down Time fo
+========================================
+
+Interface: Tunnel0, IPv4 NHRP Details
+Type:Spoke, NHRP Peers:1,
+
+ # Ent  Peer NBMA Addr Peer Tunnel Add S
+ ----- --------------- --------------- -
+     1 192.0.2.1            10.10.10.1
+
+RB2#
+RB2#
+RB2#show ip nhrp
+10.10.10.1/32 via 10.10.10.1
+   Tunnel0 created 00:38:14, never expir
+   Type: static, Flags: used
+   NBMA address: 192.0.2.1
+RB2#
+RB2#
+RB2#ping 10.10.10.1
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 10.10.
+!!!!!
+Success rate is 100 percent (5/5), round
+RB2#
+
