@@ -1,0 +1,102 @@
+BR2#show ip int brief
+Interface                  IP-Address      OK? Method Status                Protocol
+GigabitEthernet0/0         192.0.2.5       YES NVRAM  up                    up
+GigabitEthernet0/1         unassigned      YES NVRAM  administratively down down
+GigabitEthernet0/2         unassigned      YES NVRAM  administratively down down
+GigabitEthernet0/3         unassigned      YES NVRAM  administratively down down
+Loopback0                  10.255.5.5      YES manual up                    up
+Tunnel0                    10.10.10.5      YES NVRAM  up                    up
+BR2#
+BR2#show dmvpn
+Legend: Attrb --> S - Static, D - Dynamic, I - Incomplete
+        N - NATed, L - Local, X - No Socket
+        T1 - Route Installed, T2 - Nexthop-override
+        C - CTS Capable, I2 - Temporary
+        # Ent --> Number of NHRP entries with same NBMA peer
+        NHS Status: E --> Expecting Replies, R --> Responding, W --> Waiting
+        UpDn Time --> Up or Down Time for a Tunnel
+==========================================================================
+
+Interface: Tunnel0, IPv4 NHRP Details
+Type:Spoke, NHRP Peers:1,
+
+ # Ent  Peer NBMA Addr Peer Tunnel Add State  UpDn Tm Attrb
+ ----- --------------- --------------- ----- -------- -----
+     1 192.0.2.1            10.10.10.1    UP 02:11:39     S
+
+BR2#
+BR2#show ip nhrp
+10.10.10.1/32 via 10.10.10.1
+   Tunnel0 created 02:12:16, never expire
+   Type: static, Flags: used
+   NBMA address: 192.0.2.1
+BR2#
+BR2#show ip ospf neighbor
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+10.255.1.1        0   FULL/  -        00:01:40    10.10.10.1      Tunnel0
+BR2#
+BR2#show ip ospf interface tunnel0
+Tunnel0 is up, line protocol is up
+  Internet Address 10.10.10.5/24, Area 0, Attached via Interface Enable
+  Process ID 10, Router ID 10.255.5.5, Network Type POINT_TO_MULTIPOINT, Cost: 1000
+  Topology-MTID    Cost    Disabled    Shutdown      Topology Name
+        0           1000      no          no            Base
+  Enabled by interface config, including secondary ip addresses
+  Transmit Delay is 1 sec, State POINT_TO_MULTIPOINT
+  Timer intervals configured, Hello 30, Dead 120, Wait 120, Retransmit 5
+    oob-resync timeout 120
+    Hello due in 00:00:16
+  Supports Link-local Signaling (LLS)
+  Cisco NSF helper support enabled
+  IETF NSF helper support enabled
+  Index 1/1/1, flood queue length 0
+  Next 0x0(0)/0x0(0)/0x0(0)
+  Last flood scan length is 1, maximum is 1
+  Last flood scan time is 1 msec, maximum is 1 msec
+  Neighbor Count is 1, Adjacent neighbor count is 1
+    Adjacent with neighbor 10.255.1.1
+  Suppress hello for 0 neighbor(s)
+BR2#
+BR2#show ip route ospf
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override, p - overrides from PfR
+
+Gateway of last resort is not set
+
+      10.0.0.0/8 is variably subnetted, 9 subnets, 2 masks
+O        10.10.10.1/32 [110/1000] via 10.10.10.1, 00:13:52, Tunnel0
+O        10.10.10.3/32 [110/2000] via 10.10.10.1, 00:13:52, Tunnel0
+O        10.10.10.4/32 [110/2000] via 10.10.10.1, 00:13:52, Tunnel0
+O        10.255.1.1/32 [110/1001] via 10.10.10.1, 00:13:52, Tunnel0
+O        10.255.3.3/32 [110/2001] via 10.10.10.1, 00:13:52, Tunnel0
+O        10.255.4.4/32 [110/2001] via 10.10.10.1, 00:13:52, Tunnel0
+BR2#
+BR2#show run interface tunnel0
+Building configuration...
+
+Current configuration : 370 bytes
+!
+interface Tunnel0
+ description DMVPN-PH2-SPOKE
+ ip address 10.10.10.5 255.255.255.0
+ no ip redirects
+ ip nhrp authentication 12345
+ ip nhrp map 10.10.10.1 192.0.2.1
+ ip nhrp map multicast 192.0.2.1
+ ip nhrp network-id 10
+ ip nhrp nhs 10.10.10.1
+ ip ospf network point-to-multipoint
+ ip ospf 10 area 0
+ tunnel source GigabitEthernet0/0
+ tunnel mode gre multipoint
+end
+
+BR2#
