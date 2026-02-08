@@ -1,0 +1,57 @@
+# IP Plan
+
+This lab uses a shared L2 underlay (NBMA) for DMVPN and a /24 overlay for Tunnel0.
+Loopbacks are /32 and used for routing validation (v0.2+).
+
+> Notes:
+> - ISP is present in the topology but **not required for baseline v0.1/v0.2**.
+> - Naming is standardized as: **HQ1 (Hub), DC1/BR1/BR2 (Spokes), ISP (optional)**.
+
+---
+
+## 1) Underlay (NBMA / Outside) — Shared Ethernet Segment
+
+| Device | Role | Outside IF | IPv4 Address | Prefix | Notes |
+|---|---|---|---:|---:|---|
+| HQ1 | Hub | Gi0/0 | 192.0.2.1 | /24 | DMVPN NBMA (Hub) |
+| DC1 | Spoke | Gi0/0 | 192.0.2.3 | /24 | DMVPN NBMA (Spoke) |
+| BR1 | Spoke | Gi0/0 | 192.0.2.4 | /24 | DMVPN NBMA (Spoke) |
+| BR2 | Spoke | Gi0/0 | 192.0.2.5 | /24 | DMVPN NBMA (Spoke) |
+| ISP | Optional | Gi0/0 | 192.0.2.2 | /24 | Reserved for later (e.g., external routing) |
+
+Network: `192.0.2.0/24` (documentation prefix)
+
+---
+
+## 2) Overlay (DMVPN Tunnel0)
+
+| Device | Role | Tunnel IF | Tunnel IPv4 | Prefix | Notes |
+|---|---|---|---:|---:|---|
+| HQ1 | Hub | Tunnel0 | 10.10.10.1 | /24 | Hub tunnel IP |
+| DC1 | Spoke | Tunnel0 | 10.10.10.3 | /24 | Spoke tunnel IP |
+| BR1 | Spoke | Tunnel0 | 10.10.10.4 | /24 | Spoke tunnel IP |
+| BR2 | Spoke | Tunnel0 | 10.10.10.5 | /24 | Spoke tunnel IP |
+
+Network: `10.10.10.0/24`
+
+---
+
+## 3) DMVPN Parameters (Baseline v0.1)
+
+| Item | Value |
+|---|---|
+| DMVPN Phase | Phase 2 |
+| Tunnel mode | GRE multipoint (mGRE) |
+| NHRP network-id | 10 |
+| NHRP authentication key | 12345 |
+| NHS (Hub tunnel IP) | 10.10.10.1 |
+| Hub NBMA (underlay IP) | 192.0.2.1 |
+| Underlay design | Shared Ethernet segment (single L2) |
+
+---
+
+## 5) Conventions / Where to Save Artifacts
+- Baseline configs: `configs/baseline/<version>/`
+- Baseline evidence (show outputs, ping, traceroute): `evidence/baseline/<version>/`
+- Versioning:
+  - `v0.1-dmvpn` : DMVPN connectivity (NHRP registration + tunnel reachability)
