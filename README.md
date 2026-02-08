@@ -33,8 +33,6 @@ I use **GNS3 (primary)** and **Packet Tracer (supporting)** to build a reproduci
 - Verification notes (baseline log): [docs/verification-notes.md](docs/verification-notes.md)
 - Incident index: [incidents/README.md](incidents/README.md)
 - Ops artifacts: [ops/README.md](ops/README.md)
-- IP plan: [docs/ip-plan.md](docs/ip-plan.md)
-- Baseline log: [docs/verification-notes.md](docs/verification-notes.md)
 
 ---
 
