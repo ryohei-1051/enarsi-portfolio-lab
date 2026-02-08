@@ -83,4 +83,20 @@ HQ1#show ip nhrp
    NBMA address: 192.0.2.5
 HQ1#
 HQ1#
+HQ1#show run interface tunnel0
+Building configuration...
 
+Current configuration : 221 bytes
+!
+interface Tunnel0
+ description DMVPN-PH2-HUB
+ ip address 10.10.10.1 255.255.255.0
+ no ip redirects
+ ip nhrp authentication 12345
+ ip nhrp network-id 10
+ tunnel source GigabitEthernet0/0
+ tunnel mode gre multipoint
+end
+
+HQ1#
+HQ1#
