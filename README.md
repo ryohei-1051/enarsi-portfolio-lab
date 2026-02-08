@@ -1,4 +1,4 @@
-# Status: Week 1 skeleton completed. Baseline (v0.1) in progress.
+# Status: Week 1 skeleton completed. Baseline (v0.1) complete.
 # ENARSI Portfolio Lab: Branch-to-Enterprise Routing & Troubleshooting
 
 ## 0. TL;DR (One-minute overview)
