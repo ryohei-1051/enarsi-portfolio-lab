@@ -1,7 +1,32 @@
-## v0.1-dmvpn (Phase 2 / single-hub)
-- Topology: HQ1 (Hub) + DC1/BR1/BR2 (Spokes), underlay on a shared Ethernet segment
-- Result: Spokes successfully registered to HQ1 via NHRP; tunnel reachability confirmed (Spoke → HQ1 Tunnel0)
+# Verification Notes
+
+This file logs each baseline milestone (v0.x) with what was validated and where the supporting artifacts are stored.
+
+---
+
+## v0.1-dmvpn (DMVPN Phase 2 / single-hub)
+- Topology: HQ1 (Hub) + DC1/BR1/BR2 (Spokes); underlay on a shared Ethernet segment (NBMA)
+- Result:
+  - NHRP registrations confirmed on HQ1
+  - Tunnel reachability verified (Spokes → HQ1 Tunnel0: 10.10.10.1)
 - Evidence: `evidence/baseline/v0.1-dmvpn/`
 - Configs: `configs/baseline/v0.1-dmvpn/`
-- Key checks: `show dmvpn`, `show ip nhrp`, `show int tunnel0`, `ping <HQ1_Tunnel_IP>`
-- Next: v0.2 add OSPF over DMVPN (hub-spoke adjacencies)
+- Key checks:
+  - HQ1: `show dmvpn`, `show ip nhrp`, `show int tunnel0`
+  - Spokes: `show ip nhrp`, `ping 10.10.10.1`
+- Notes:
+  - ISP router is present in the topology but not required for v0.1
+
+---
+
+## v0.2-ospf (OSPF over DMVPN Phase 2) — Planned
+- Goal:
+  - OSPF neighbors FULL between HQ1 and all spokes over Tunnel0
+  - Loopback routes exchanged via OSPF (10.255.x.x/32)
+- Evidence (to be created): `evidence/baseline/v0.2-ospf/`
+- Configs (to be created): `configs/baseline/v0.2-ospf/`
+- Key checks (target):
+  - `show ip ospf neighbor`
+  - `show ip route ospf`
+  - `ping/traceroute` between loopbacks (e.g., BR1 → DC1/BR2)
+  
