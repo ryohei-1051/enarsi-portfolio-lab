@@ -1,0 +1,105 @@
+HQ1#tclsh
+HQ1(tcl)#foreach X {
++>10.255.1.1
++>10.255.3.3
++>10.255.4.4
++>10.255.5.5
++>} {traceroute $X }
+Type escape sequence to abort.
+Tracing the route to 10.255.1.1
+VRF info: (vrf in name/id, vrf out name/id)
+  1 10.255.1.1 1 msec 1 msec 0 msec
+Type escape sequence to abort.
+Tracing the route to 10.255.3.3
+VRF info: (vrf in name/id, vrf out name/id)
+  1 10.10.10.3 2 msec 3 msec 3 msec
+Type escape sequence to abort.
+Tracing the route to 10.255.4.4
+VRF info: (vrf in name/id, vrf out name/id)
+  1 10.10.10.4 2 msec 2 msec 2 msec
+Type escape sequence to abort.
+Tracing the route to 10.255.5.5
+VRF info: (vrf in name/id, vrf out name/id)
+  1 10.10.10.5 2 msec 1 msec 1 msec
+HQ1(tcl)#
+
+DC1#tclsh
+DC1(tcl)#foreach X {
++>10.255.1.1
++>10.255.3.3
++>10.255.4.4
++>10.255.5.5
++>} {traceroute $X }
+Type escape sequence to abort.
+Tracing the route to 10.255.1.1
+VRF info: (vrf in name/id, vrf out name/id)
+  1 10.10.10.1 3 msec 3 msec 2 msec
+Type escape sequence to abort.
+Tracing the route to 10.255.3.3
+VRF info: (vrf in name/id, vrf out name/id)
+  1 10.255.3.3 0 msec 0 msec 0 msec
+Type escape sequence to abort.
+Tracing the route to 10.255.4.4
+VRF info: (vrf in name/id, vrf out name/id)
+  1 10.10.10.1 2 msec 2 msec 2 msec
+  2 10.10.10.4 4 msec 3 msec 2 msec
+Type escape sequence to abort.
+Tracing the route to 10.255.5.5
+VRF info: (vrf in name/id, vrf out name/id)
+  1 10.10.10.1 2 msec 1 msec 2 msec
+  2 10.10.10.5 2 msec 2 msec 3 msec
+DC1(tcl)#
+
+BR1#tclsh
+BR1(tcl)#foreach X {
++>10.255.1.1
++>10.255.3.3
++>10.255.4.4
++>10.255.5.5
++>} {traceroute $X }
+Type escape sequence to abort.
+Tracing the route to 10.255.1.1
+VRF info: (vrf in name/id, vrf out name/id)
+  1 10.10.10.1 3 msec 2 msec 1 msec
+Type escape sequence to abort.
+Tracing the route to 10.255.3.3
+VRF info: (vrf in name/id, vrf out name/id)
+  1 10.10.10.1 2 msec 3 msec 2 msec
+  2 10.10.10.3 3 msec 3 msec 2 msec
+Type escape sequence to abort.
+Tracing the route to 10.255.4.4
+VRF info: (vrf in name/id, vrf out name/id)
+  1 10.255.4.4 1 msec 0 msec 0 msec
+Type escape sequence to abort.
+Tracing the route to 10.255.5.5
+VRF info: (vrf in name/id, vrf out name/id)
+  1 10.10.10.1 2 msec 2 msec 1 msec
+  2 10.10.10.5 4 msec 3 msec 3 msec
+BR1(tcl)#
+
+BR2#tclsh
+BR2(tcl)#foreach X {
++>10.255.1.1
++>10.255.3.3
++>10.255.4.4
++>10.255.5.5
++>} {traceroute $X }
+Type escape sequence to abort.
+Tracing the route to 10.255.1.1
+VRF info: (vrf in name/id, vrf out name/id)
+  1 10.10.10.1 3 msec 2 msec 1 msec
+Type escape sequence to abort.
+Tracing the route to 10.255.3.3
+VRF info: (vrf in name/id, vrf out name/id)
+  1 10.10.10.1 1 msec 3 msec 3 msec
+  2 10.10.10.3 3 msec 3 msec 4 msec
+Type escape sequence to abort.
+Tracing the route to 10.255.4.4
+VRF info: (vrf in name/id, vrf out name/id)
+  1 10.10.10.1 2 msec 2 msec 2 msec
+  2 10.10.10.4 3 msec 3 msec 2 msec
+Type escape sequence to abort.
+Tracing the route to 10.255.5.5
+VRF info: (vrf in name/id, vrf out name/id)
+  1 10.255.5.5 0 msec 0 msec 0 msec
+BR2(tcl)#
