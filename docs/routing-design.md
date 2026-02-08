@@ -20,7 +20,7 @@
 - **P2P links:** /30 or /31 (state what you chose)
 - **Summarization boundaries:** (where summaries are applied and why)
 
-> Full table: [docs/ip-plan.md]
+> Full table: (docs/ip-plan.md)[docs/ip-plan.md]
 
 ## 4. Protocol design
 
