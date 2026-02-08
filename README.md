@@ -4,17 +4,17 @@
 
 # ENARSI Portfolio Lab: DMVPN Routing & Troubleshooting
 
-This repository is a networking portfolio built around **CCNP ENARSI-level routing & troubleshooting**.
-The lab is built in **GNS3 (primary)** with supporting **Packet Tracer** artifacts where helpful.
+This repository is a networking portfolio built around **CCNP ENARSI-level routing & troubleshooting**.  
+I use **GNS3 (primary)** and **Packet Tracer (supporting)** to build a reproducible **DMVPN Phase 2** lab and validate dynamic routing over the overlay (**OSPF in v0.2**; more to come).
 
 ---
 
 ## 0) TL;DR (One-minute overview)
 
 **What you’ll find here**
-- A **reproducible DMVPN Phase 2** hub-and-spoke foundation (HQ1 hub + DC1/BR1/BR2 spokes)
+- A reproducible **DMVPN Phase 2** hub-and-spoke lab (HQ1 hub + DC1/BR1/BR2 spokes)
 - Baseline milestones with **versioned configs + evidence** (show outputs / ping / traceroute)
-- A growing set of **incident runbooks** with a consistent format:  
+- A growing set of **incident runbooks** (failure scenarios) with a consistent format:  
   **Symptom → Investigation (commands + evidence) → Root cause → Fix → Verification → Prevention**
 
 **Why it matters**
@@ -22,10 +22,10 @@ The lab is built in **GNS3 (primary)** with supporting **Packet Tracer** artifac
   **design → build → verify → break intentionally → troubleshoot → prevent recurrence**
 
 ### Baselines (Versioned milestones)
-| Baseline | Goal | Configs | Evidence | Notes |
-|----|----|----|----|----|
-| v0.1-dmvpn  | DMVPN Phase 2 up; NHRP registration; tunnel reachability | `configs/baseline/v0.1-dmvpn/` | `evidence/baseline/v0.1-dmvpn/` | DMVPN foundation |
-| v0.2-ospf   | OSPF neighbors FULL over Tunnel0; loopbacks exchanged; reachability verified | `configs/baseline/v0.2-ospf/` | `evidence/baseline/v0.2-ospf/` | OSPF over DMVPN |
+| Baseline | Goal | Configs | Evidence |
+|---|---|---|---|
+| v0.1-dmvpn | DMVPN Phase 2 up; NHRP registration; tunnel reachability | `configs/baseline/v0.1-dmvpn/` | `evidence/baseline/v0.1-dmvpn/` |
+| v0.2-ospf | OSPF neighbors FULL over Tunnel0; loopbacks exchanged; reachability verified | `configs/baseline/v0.2-ospf/` | `evidence/baseline/v0.2-ospf/` |
 
 ### Quick links
 - Start here (design): [docs/routing-design.md](docs/routing-design.md)
@@ -35,6 +35,8 @@ The lab is built in **GNS3 (primary)** with supporting **Packet Tracer** artifac
 - Verification notes (baseline log): [docs/verification-notes.md](docs/verification-notes.md)
 - Incident index: [incidents/README.md](incidents/README.md)
 - Ops artifacts: [ops/README.md](ops/README.md)
+- IP plan: [docs/ip-plan.md](docs/ip-plan.md)
+- Baseline log: [docs/verification-notes.md](docs/verification-notes.md)
 
 ---
 
