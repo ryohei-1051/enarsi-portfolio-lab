@@ -16,10 +16,11 @@ This file logs each baseline milestone (v0.x) with what was validated and where 
   - Spokes: `show ip nhrp`, `ping 10.10.10.1`
 - Notes:
   - ISP router is present in the topology but not required for v0.1
+- Next: v0.2 add OSPF over DMVPN (hub-spoke adjacencies)
 
 ---
 
-## v0.2-ospf (OSPF over DMVPN Phase 2) — Planned
+## v0.2-ospf (OSPF over DMVPN Phase 2)
 - Goal:
   - OSPF neighbors FULL between HQ1 and all spokes over Tunnel0
   - Loopback routes exchanged via OSPF (10.255.x.x/32)
@@ -29,4 +30,4 @@ This file logs each baseline milestone (v0.x) with what was validated and where 
   - `show ip ospf neighbor`
   - `show ip route ospf`
   - `ping/traceroute` between loopbacks (e.g., BR1 → DC1/BR2)
-  
+- Next: v0.3 add EIGRP over DMVPN (or compare OSPF vs EIGRP behavior) 
