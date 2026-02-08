@@ -32,4 +32,7 @@ This file logs each baseline milestone (v0.x) with what was validated and where 
   - `show ip ospf interface tunnel0`
   - `show ip route ospf`
   - `ping/traceroute` between loopbacks (e.g., BR1 → DC1/BR2)
+- Note:
+  - ip nhrp map multicast dynamic may not appear in show run; verify with show running-config all.
 - Next: v0.3 add EIGRP over DMVPN (or compare OSPF vs EIGRP behavior)
+
