@@ -80,4 +80,22 @@ Sending 5, 100-byte ICMP Echos to 10.10.10.1, timeout is 2 seconds:
 Success rate is 100 percent (5/5), round-trip min/avg/max = 1/2/3 ms
 DC1#
 DC1#
+DC1#show run interface tunnel0
+Building configuration...
 
+Current configuration : 314 bytes
+!
+interface Tunnel0
+ description DMVPN-PH2-SPOKE
+ ip address 10.10.10.3 255.255.255.0
+ no ip redirects
+ ip nhrp authentication 12345
+ ip nhrp map 10.10.10.1 192.0.2.1
+ ip nhrp map multicast 192.0.2.1
+ ip nhrp network-id 10
+ ip nhrp nhs 10.10.10.1
+ tunnel source GigabitEthernet0/0
+ tunnel mode gre multipoint
+end
+
+DC1#
