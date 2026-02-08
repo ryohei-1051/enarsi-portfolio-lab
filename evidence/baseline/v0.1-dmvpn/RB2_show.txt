@@ -1,0 +1,89 @@
+RB2#show ip int brief
+Interface                  IP-Address      OK? Method Status                Protocol
+GigabitEthernet0/0         192.0.2.5       YES manual up                    up
+GigabitEthernet0/1         unassigned      YES unset  administratively down down
+GigabitEthernet0/2         unassigned      YES unset  administratively down down
+GigabitEthernet0/3         unassigned      YES unset  administratively down down
+Tunnel0                    10.10.10.5      YES manual up                    up
+RB2#
+RB2#show interface tunnel0
+Tunnel0 is up, line protocol is up
+  Hardware is Tunnel
+  Description: DMVPN-PH2-SPOKE
+  Internet address is 10.10.10.5/24
+  MTU 17916 bytes, BW 100 Kbit/sec, DLY 50000 usec,
+     reliability 255/255, txload 1/255, rxload 1/255
+  Encapsulation TUNNEL, loopback not set
+  Keepalive not set
+  Tunnel linestate evaluation up
+  Tunnel source 192.0.2.5 (GigabitEthernet0/0)
+   Tunnel Subblocks:
+      src-track:
+         Tunnel0 source tracking subblock associated with GigabitEthernet0/0
+          Set of tunnels with source GigabitEthernet0/0, 1 member (includes iterators), on interface <OK>
+  Tunnel protocol/transport multi-GRE/IP
+    Key disabled, sequencing disabled
+    Checksumming of packets disabled
+  Tunnel TTL 255, Fast tunneling enabled
+  Tunnel transport MTU 1476 bytes
+  Tunnel transmit bandwidth 8000 (kbps)
+  Tunnel receive bandwidth 8000 (kbps)
+  Last input 00:02:16, output 00:02:16, output hang never
+  Last clearing of "show interface" counters 00:56:16
+  Input queue: 0/75/0/0 (size/max/drops/flushes); Total output drops: 0
+  Queueing strategy: fifo
+  Output queue: 0/0 (size/max)
+  5 minute input rate 0 bits/sec, 0 packets/sec
+  5 minute output rate 0 bits/sec, 0 packets/sec
+     32 packets input, 4268 bytes, 0 no buffer
+     Received 0 broadcasts (0 IP multicasts)
+     0 runts, 0 giants, 0 throttles
+     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored, 0 abort
+     57 packets output, 7253 bytes, 0 underruns
+     0 output errors, 0 collisions, 0 interface resets
+     0 unknown protocol drops
+     0 output buffer failures, 0 output buffers swapped out
+RB2#
+RB2#show dmvpn
+Legend: Attrb --> S - Static, D - Dynamic, I - Incomplete
+        N - NATed, L - Local, X - No Socket
+        T1 - Route Installed, T2 - Nexthop-override
+        C - CTS Capable, I2 - Temporary
+        # Ent --> Number of NHRP entries with same NBMA peer
+        NHS Status: E --> Expecting Replies, R --> Responding, W --> Waiting
+        UpDn Time --> Up or Down Time for a Tunnel
+==========================================================================
+
+Interface: Tunnel0, IPv4 NHRP Details
+Type:Spoke, NHRP Peers:1,
+
+ # Ent  Peer NBMA Addr Peer Tunnel Add State  UpDn Tm Attrb
+ ----- --------------- --------------- ----- -------- -----
+     1 192.0.2.1            10.10.10.1    UP 00:39:04     S
+
+RB2#
+RB2#show ip nhrp
+10.10.10.1/32 via 10.10.10.1
+   Tunnel0 created 00:56:29, never expire
+   Type: static, Flags: used
+   NBMA address: 192.0.2.1
+RB2#
+RB2#show run interface tunnel0
+Building configuration...
+
+Current configuration : 314 bytes
+!
+interface Tunnel0
+ description DMVPN-PH2-SPOKE
+ ip address 10.10.10.5 255.255.255.0
+ no ip redirects
+ ip nhrp authentication 12345
+ ip nhrp map 10.10.10.1 192.0.2.1
+ ip nhrp map multicast 192.0.2.1
+ ip nhrp network-id 10
+ ip nhrp nhs 10.10.10.1
+ tunnel source GigabitEthernet0/0
+ tunnel mode gre multipoint
+end
+
+RB2#
