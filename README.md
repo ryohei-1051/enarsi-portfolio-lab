@@ -1,6 +1,6 @@
 # ENARSI Portfolio Lab: DMVPN Routing & Troubleshooting (GNS3)
 
-**Status:** Skeleton complete ✅ | Baseline **v0.1 (DMVPN Phase 2)** ✅ | Baseline **v0.2 (OSPF over DMVPN)** ✅
+**Status:** Skeleton complete | Baseline **v0.1 (DMVPN Phase 2)** | Baseline **v0.2 (OSPF over DMVPN)**
 
 This repository is a networking portfolio built around **CCNP ENARSI-level routing & troubleshooting**.
 The lab is built in **GNS3 (primary)** with supporting **Packet Tracer** artifacts where helpful.
