@@ -4,4 +4,4 @@
 - Evidence: `evidence/baseline/v0.1-dmvpn/`
 - Configs: `configs/baseline/v0.1-dmvpn/`
 - Key checks: `show dmvpn`, `show ip nhrp`, `show int tunnel0`, `ping <HQ1_Tunnel_IP>`
-- Next: v0.2 add OSPF over DMVPN (hub-spoke adjacencies)****
+- Next: v0.2 add OSPF over DMVPN (hub-spoke adjacencies)
