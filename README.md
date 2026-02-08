@@ -23,7 +23,7 @@ The lab is built in **GNS3 (primary)** with supporting **Packet Tracer** artifac
 | Baseline | Goal | Configs | Evidence | Notes |
 |---|---|---|---|---|
 | v0.1-dmvpn | DMVPN Phase 2 up; NHRP registration; tunnel reachability | `configs/baseline/v0.1-dmvpn/` | `evidence/baseline/v0.1-dmvpn/` | DMVPN foundation |
-| v0.2-ospf | OSPF neighbors FULL over Tunnel0; loopbacks exchanged; reachability verified | `configs/baseline/v0.2-ospf/` | `evidence/baseline/v0.2-ospf/` | OSPF over DMVPN |
+| v0.2-ospf  | OSPF neighbors FULL over Tunnel0; loopbacks exchanged; reachability verified | `configs/baseline/v0.2-ospf/` | `evidence/baseline/v0.2-ospf/` | OSPF over DMVPN |
 
 ### Quick links
 - Start here (design): [docs/routing-design.md](docs/routing-design.md)
