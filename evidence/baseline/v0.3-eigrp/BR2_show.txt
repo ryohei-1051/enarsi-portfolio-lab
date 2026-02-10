@@ -18,24 +18,39 @@ Legend: Attrb --> S - Static, D - Dynamic, I - Incomplete
 ==========================================================================
 
 Interface: Tunnel0, IPv4 NHRP Details
-Type:Spoke, NHRP Peers:1,
+Type:Spoke, NHRP Peers:3,
 
  # Ent  Peer NBMA Addr Peer Tunnel Add State  UpDn Tm Attrb
  ----- --------------- --------------- ----- -------- -----
-     1 192.0.2.1            10.10.10.1    UP 00:07:41     S
+     1 192.0.2.1            10.10.10.1    UP 00:55:07     S
+     1 192.0.2.3            10.10.10.3    UP 00:08:25     D
+     1 192.0.2.4            10.10.10.4    UP 00:08:25     D
 
 BR2#
 BR2#show ip nhrp
 10.10.10.1/32 via 10.10.10.1
-   Tunnel0 created 00:08:19, never expire
+   Tunnel0 created 00:55:45, never expire
    Type: static, Flags: used
    NBMA address: 192.0.2.1
+10.10.10.3/32 via 10.10.10.3
+   Tunnel0 created 00:08:25, expire 00:01:35
+   Type: dynamic, Flags: router implicit used nhop
+   NBMA address: 192.0.2.3
+10.10.10.4/32 via 10.10.10.4
+   Tunnel0 created 00:08:25, expire 00:01:36
+   Type: dynamic, Flags: router implicit used nhop
+   NBMA address: 192.0.2.4
+10.10.10.5/32 via 10.10.10.5
+   Tunnel0 created 00:08:25, expire 00:01:36
+   Type: dynamic, Flags: router unique local
+   NBMA address: 192.0.2.5
+    (no-socket)
 BR2#
 BR2#show ip eigrp neighbors
 EIGRP-IPv4 VR(ENARSI) Address-Family Neighbors for AS(10)
 H   Address                 Interface              Hold Uptime   SRTT   RTO  Q  Seq
                                                    (sec)         (ms)       Cnt Num
-0   10.10.10.1              Tu0                      12 00:00:36    6  1470  0  9
+0   10.10.10.1              Tu0                      13 00:48:05    6  1470  0  9
 BR2#
 BR2#show ip route eigrp
 Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
@@ -48,10 +63,10 @@ Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
        a - application route
        + - replicated route, % - next hop override, p - overrides from PfR
 
-Gateway of last resort is not set
+Gateway of last resort is 10.10.10.1 to network 0.0.0.0
 
       10.0.0.0/8 is variably subnetted, 4 subnets, 2 masks
-D        10.255.1.1/32 [90/76800640] via 10.10.10.1, 00:00:36, Tunnel0
+D        10.255.1.1/32 [90/76800640] via 10.10.10.1, 00:48:06, Tunnel0
 BR2#
 BR2#show ip protocols
 *** IP Routing is NSF aware ***
@@ -77,7 +92,35 @@ Routing Protocol is "eigrp 10"
   Outgoing update filter list for all interfaces is not set
   Incoming update filter list for all interfaces is not set
   Default networks flagged in outgoing updates
+  Default networks accepted from incoming updates
+  EIGRP-IPv4 VR(ENARSI) Address-Family Protocol for AS(10)
+    Metric weight K1=1, K2=0, K3=1, K4=0, K5=0 K6=0
+    Metric rib-scale 128
+    Metric version 64bit
+    Soft SIA disabled
+    NSF-aware route hold timer is 240
+    Router-ID: 10.255.5.5
+    Topology : 0 (base)
+      Active Timer: 3 min
+      Distance: internal 90 external 170
+      Maximum path: 4
+      Maximum hopcount 100
+      Maximum metric variance 1
+      Total Prefix Count: 3
+      Total Redist Count: 0
 
+  Automatic Summarization: disabled
+  Maximum path: 4
+  Routing for Networks:
+    10.10.10.0/24
+    10.255.5.5/32
+    10.255.0.0/16
+  Routing Information Sources:
+    Gateway         Distance      Last Update
+    10.10.10.1            90      00:48:11
+  Distance: internal 90 external 170
+
+BR2#
 BR2#show run interface tunnel0
 Building configuration...
 
@@ -105,6 +148,7 @@ router eigrp ENARSI
   topology base
   exit-af-topology
   network 10.10.10.0 0.0.0.255
+  network 10.255.0.0 0.0.255.255
   network 10.255.5.5 0.0.0.0
   eigrp router-id 10.255.5.5
  exit-address-family
