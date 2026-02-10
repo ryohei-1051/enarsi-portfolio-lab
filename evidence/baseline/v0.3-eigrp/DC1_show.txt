@@ -1,0 +1,111 @@
+DC1#show ip int brief
+Interface                  IP-Address      OK? Method Status                Protocol
+GigabitEthernet0/0         192.0.2.3       YES NVRAM  up                    up
+GigabitEthernet0/1         unassigned      YES NVRAM  administratively down down
+GigabitEthernet0/2         unassigned      YES NVRAM  administratively down down
+GigabitEthernet0/3         unassigned      YES NVRAM  administratively down down
+Loopback0                  10.255.3.3      YES NVRAM  up                    up
+Tunnel0                    10.10.10.3      YES NVRAM  up                    up
+DC1#
+DC1#show dmvpn
+Legend: Attrb --> S - Static, D - Dynamic, I - Incomplete
+        N - NATed, L - Local, X - No Socket
+        T1 - Route Installed, T2 - Nexthop-override
+        C - CTS Capable, I2 - Temporary
+        # Ent --> Number of NHRP entries with same NBMA peer
+        NHS Status: E --> Expecting Replies, R --> Responding, W --> Waiting
+        UpDn Time --> Up or Down Time for a Tunnel
+==========================================================================
+
+Interface: Tunnel0, IPv4 NHRP Details
+Type:Spoke, NHRP Peers:1,
+
+ # Ent  Peer NBMA Addr Peer Tunnel Add State  UpDn Tm Attrb
+ ----- --------------- --------------- ----- -------- -----
+     1 192.0.2.1            10.10.10.1    UP 00:08:08     S
+
+DC1#
+DC1#show ip nhrp
+10.10.10.1/32 via 10.10.10.1
+   Tunnel0 created 00:08:46, never expire
+   Type: static, Flags: used
+   NBMA address: 192.0.2.1
+DC1#
+DC1#show ip eigrp neighbors
+EIGRP-IPv4 VR(ENARSI) Address-Family Neighbors for AS(10)
+H   Address                 Interface              Hold Uptime   SRTT   RTO  Q  Seq
+                                                   (sec)         (ms)       Cnt Num
+0   10.10.10.1              Tu0                      14 00:01:37   18  1470  0  9
+DC1#
+DC1#show ip route eigrp
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override, p - overrides from PfR
+
+Gateway of last resort is not set
+
+      10.0.0.0/8 is variably subnetted, 4 subnets, 2 masks
+D        10.255.1.1/32 [90/76800640] via 10.10.10.1, 00:01:35, Tunnel0
+DC1#
+DC1#show ip protocols
+*** IP Routing is NSF aware ***
+
+Routing Protocol is "application"
+  Sending updates every 0 seconds
+  Invalid after 0 seconds, hold down 0, flushed after 0
+  Outgoing update filter list for all interfaces is not set
+  Incoming update filter list for all interfaces is not set
+  Maximum path: 32
+  Routing for Networks:
+  Routing Information Sources:
+    Gateway         Distance      Last Update
+  Distance: (default is 4)
+
+Routing Protocol is "nhrp"
+  Maximum path: 32
+  Routing Information Sources:
+    Gateway         Distance      Last Update
+  Distance: (default is 250)
+
+Routing Protocol is "eigrp 10"
+  Outgoing update filter list for all interfaces is not set
+  Incoming update filter list for all interfaces is not set
+  Default networks flagged in outgoing updates
+
+DC1#show run interface tunnel0
+Building configuration...
+
+Current configuration : 314 bytes
+!
+interface Tunnel0
+ description DMVPN-PH2-SPOKE
+ ip address 10.10.10.3 255.255.255.0
+ no ip redirects
+ ip nhrp authentication 12345
+ ip nhrp map 10.10.10.1 192.0.2.1
+ ip nhrp map multicast 192.0.2.1
+ ip nhrp network-id 10
+ ip nhrp nhs 10.10.10.1
+ tunnel source GigabitEthernet0/0
+ tunnel mode gre multipoint
+end
+
+DC1#
+DC1#show run | section router eigrp
+router eigrp ENARSI
+ !
+ address-family ipv4 unicast autonomous-system 10
+  !
+  topology base
+  exit-af-topology
+  network 10.10.10.0 0.0.0.255
+  network 10.255.3.3 0.0.0.0
+  eigrp router-id 10.255.3.3
+ exit-address-family
+DC1#
