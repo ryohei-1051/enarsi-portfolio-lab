@@ -1,6 +1,6 @@
-Current configuration : 3687 bytes
+Current configuration : 3832 bytes
 !
-! Last configuration change at 07:38:30 UTC Tue Feb 10 2026
+! Last configuration change at 08:18:24 UTC Tue Feb 10 2026
 !
 version 15.9
 service timestamps debug datetime msec
@@ -69,6 +69,8 @@ interface Tunnel0
  description DMVPN-PH2-HUB
  ip address 10.10.10.1 255.255.255.0
  no ip redirects
+ no ip next-hop-self eigrp 10
+ no ip split-horizon eigrp 10
  ip nhrp authentication 12345
  ip nhrp network-id 10
  tunnel source GigabitEthernet0/0
@@ -108,9 +110,12 @@ router eigrp ENARSI
  address-family ipv4 unicast autonomous-system 10
   !
   topology base
+   redistribute static
   exit-af-topology
   network 10.10.10.0 0.0.0.255
+  network 10.255.0.0 0.0.255.255
   network 10.255.1.1 0.0.0.0
+  network 10.255.3.3 0.0.0.0
   eigrp router-id 10.255.1.1
  exit-address-family
 !
