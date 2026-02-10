@@ -22,32 +22,32 @@ Type:Hub, NHRP Peers:3,
 
  # Ent  Peer NBMA Addr Peer Tunnel Add State  UpDn Tm Attrb
  ----- --------------- --------------- ----- -------- -----
-     1 192.0.2.3            10.10.10.3    UP 00:08:12     D
-     1 192.0.2.4            10.10.10.4    UP 00:08:12     D
-     1 192.0.2.5            10.10.10.5    UP 00:08:12     D
+     1 192.0.2.3            10.10.10.3    UP 00:55:14     D
+     1 192.0.2.4            10.10.10.4    UP 00:55:15     D
+     1 192.0.2.5            10.10.10.5    UP 00:55:14     D
 
 HQ1#
 HQ1#show ip nhrp
 10.10.10.3/32 via 10.10.10.3
-   Tunnel0 created 00:08:12, expire 00:08:03
-   Type: dynamic, Flags: registered used nhop
+   Tunnel0 created 00:55:15, expire 00:07:46
+   Type: dynamic, Flags: registered nhop
    NBMA address: 192.0.2.3
 10.10.10.4/32 via 10.10.10.4
-   Tunnel0 created 00:08:13, expire 00:08:01
-   Type: dynamic, Flags: registered used nhop
+   Tunnel0 created 00:55:15, expire 00:07:41
+   Type: dynamic, Flags: registered nhop
    NBMA address: 192.0.2.4
 10.10.10.5/32 via 10.10.10.5
-   Tunnel0 created 00:08:12, expire 00:08:01
-   Type: dynamic, Flags: registered used nhop
+   Tunnel0 created 00:55:14, expire 00:07:43
+   Type: dynamic, Flags: registered nhop
    NBMA address: 192.0.2.5
 HQ1#
 HQ1#show ip eigrp neighbors
 EIGRP-IPv4 VR(ENARSI) Address-Family Neighbors for AS(10)
 H   Address                 Interface              Hold Uptime   SRTT   RTO  Q  Seq
                                                    (sec)         (ms)       Cnt Num
-2   10.10.10.5              Tu0                      13 00:01:06    4  1434  0  4
-1   10.10.10.4              Tu0                      14 00:01:19    3  1434  0  4
-0   10.10.10.3              Tu0                      11 00:01:37    2  1434  0  4
+2   10.10.10.5              Tu0                      13 00:48:08    4  1434  0  4
+1   10.10.10.4              Tu0                      11 00:48:22    3  1434  0  4
+0   10.10.10.3              Tu0                      13 00:48:39    2  1434  0  4
 HQ1#
 HQ1#show ip route eigrp
 Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
@@ -63,9 +63,9 @@ Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
 Gateway of last resort is not set
 
       10.0.0.0/8 is variably subnetted, 6 subnets, 2 masks
-D        10.255.3.3/32 [90/76800640] via 10.10.10.3, 00:01:40, Tunnel0
-D        10.255.4.4/32 [90/76800640] via 10.10.10.4, 00:01:22, Tunnel0
-D        10.255.5.5/32 [90/76800640] via 10.10.10.5, 00:01:09, Tunnel0
+D        10.255.3.3/32 [90/76800640] via 10.10.10.3, 00:48:43, Tunnel0
+D        10.255.4.4/32 [90/76800640] via 10.10.10.4, 00:48:25, Tunnel0
+D        10.255.5.5/32 [90/76800640] via 10.10.10.5, 00:48:12, Tunnel0
 HQ1#
 HQ1#show ip protocols
 *** IP Routing is NSF aware ***
@@ -91,16 +91,50 @@ Routing Protocol is "eigrp 10"
   Outgoing update filter list for all interfaces is not set
   Incoming update filter list for all interfaces is not set
   Default networks flagged in outgoing updates
+  Default networks accepted from incoming updates
+  Redistributing: static
+  EIGRP-IPv4 VR(ENARSI) Address-Family Protocol for AS(10)
+    Metric weight K1=1, K2=0, K3=1, K4=0, K5=0 K6=0
+    Metric rib-scale 128
+    Metric version 64bit
+    Soft SIA disabled
+    NSF-aware route hold timer is 240
+    Router-ID: 10.255.1.1
+    Topology : 0 (base)
+      Active Timer: 3 min
+      Distance: internal 90 external 170
+      Maximum path: 4
+      Maximum hopcount 100
+      Maximum metric variance 1
+      Total Prefix Count: 5
+      Total Redist Count: 0
 
+  Automatic Summarization: disabled
+  Maximum path: 4
+  Routing for Networks:
+    10.10.10.0/24
+    10.255.1.1/32
+    10.255.3.3/32
+    10.255.0.0/16
+  Routing Information Sources:
+    Gateway         Distance      Last Update
+    10.10.10.3            90      00:48:47
+    10.10.10.4            90      00:48:29
+    10.10.10.5            90      00:48:16
+  Distance: internal 90 external 170
+
+HQ1#
 HQ1#show run interface tunnel0
 Building configuration...
 
-Current configuration : 221 bytes
+Current configuration : 281 bytes
 !
 interface Tunnel0
  description DMVPN-PH2-HUB
  ip address 10.10.10.1 255.255.255.0
  no ip redirects
+ no ip next-hop-self eigrp 10
+ no ip split-horizon eigrp 10
  ip nhrp authentication 12345
  ip nhrp network-id 10
  tunnel source GigabitEthernet0/0
@@ -114,9 +148,12 @@ router eigrp ENARSI
  address-family ipv4 unicast autonomous-system 10
   !
   topology base
+   redistribute static
   exit-af-topology
   network 10.10.10.0 0.0.0.255
+  network 10.255.0.0 0.0.255.255
   network 10.255.1.1 0.0.0.0
+  network 10.255.3.3 0.0.0.0
   eigrp router-id 10.255.1.1
  exit-address-family
 HQ1#
