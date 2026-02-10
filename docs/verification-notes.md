@@ -36,3 +36,19 @@ This file logs each baseline milestone (v0.x) with what was validated and where 
   - ip nhrp map multicast dynamic may not appear in show run; verify with show running-config all.
 - Next: v0.3 add EIGRP over DMVPN (or compare OSPF vs EIGRP behavior)
 
+---
+
+## v0.3-eigrp (EIGRP over DMVPN Phase 2)
+- Result:
+  - EIGRP neighbors established between HQ1 and all spokes over Tunnel0
+  - Loopback routes exchanged via EIGRP (10.255.x.x/32)
+  - Reachability validated with ping/traceroute (spoke-to-spoke via HQ1 as expected for Phase 2)
+- Evidence: `evidence/baseline/v0.3-eigrp/`
+- Configs: `configs/baseline/v0.3-eigrp/`
+- Key checks:
+  - `show ip eigrp neighbors`
+  - `show ip route eigrp`
+  - `show ip protocols`
+  - `ping/traceroute` between loopbacks (e.g., BR1 → DC1/BR2)
+- Next: INC (EIGRP neighbor not forming / route filtering / split-horizon)
+
