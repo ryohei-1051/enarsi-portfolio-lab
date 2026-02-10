@@ -22,22 +22,22 @@ Type:Spoke, NHRP Peers:3,
 
  # Ent  Peer NBMA Addr Peer Tunnel Add State  UpDn Tm Attrb
  ----- --------------- --------------- ----- -------- -----
-     1 192.0.2.1            10.10.10.1    UP 00:52:49     S
-     1 192.0.2.3            10.10.10.3    UP 00:06:02     D
-     1 192.0.2.5            10.10.10.5    UP 00:06:02     D
+     1 192.0.2.1            10.10.10.1    UP 00:55:10     S
+     1 192.0.2.3            10.10.10.3    UP 00:08:24     D
+     1 192.0.2.5            10.10.10.5    UP 00:08:24     D
 
 BR1#
 BR1#show ip nhrp
 10.10.10.1/32 via 10.10.10.1
-   Tunnel0 created 00:53:26, never expire
+   Tunnel0 created 00:55:48, never expire
    Type: static, Flags: used
    NBMA address: 192.0.2.1
 10.10.10.3/32 via 10.10.10.3
-   Tunnel0 created 00:06:04, expire 00:03:57
+   Tunnel0 created 00:08:26, expire 00:01:35
    Type: dynamic, Flags: router used nhop
    NBMA address: 192.0.2.3
 10.10.10.5/32 via 10.10.10.5
-   Tunnel0 created 00:06:04, expire 00:03:57
+   Tunnel0 created 00:08:26, expire 00:01:35
    Type: dynamic, Flags: router used nhop
    NBMA address: 192.0.2.5
 BR1#
@@ -45,7 +45,7 @@ BR1#show ip eigrp neighbors
 EIGRP-IPv4 VR(ENARSI) Address-Family Neighbors for AS(10)
 H   Address                 Interface              Hold Uptime   SRTT   RTO  Q  Seq
                                                    (sec)         (ms)       Cnt Num
-0   10.10.10.1              Tu0                      11 00:45:57    7  1470  0  9
+0   10.10.10.1              Tu0                      11 00:48:18    7  1470  0  9
 BR1#
 BR1#show ip route eigrp
 Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
@@ -61,7 +61,7 @@ Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
 Gateway of last resort is 10.10.10.1 to network 0.0.0.0
 
       10.0.0.0/8 is variably subnetted, 4 subnets, 2 masks
-D        10.255.1.1/32 [90/76800640] via 10.10.10.1, 00:46:00, Tunnel0
+D        10.255.1.1/32 [90/76800640] via 10.10.10.1, 00:48:22, Tunnel0
 BR1#
 BR1#show ip protocols
 *** IP Routing is NSF aware ***
@@ -88,10 +88,51 @@ Routing Protocol is "eigrp 10"
   Incoming update filter list for all interfaces is not set
   Default networks flagged in outgoing updates
   Default networks accepted from incoming updates
+  EIGRP-IPv4 VR(ENARSI) Address-Family Protocol for AS(10)
+    Metric weight K1=1, K2=0, K3=1, K4=0, K5=0 K6=0
+    Metric rib-scale 128
+    Metric version 64bit
+    Soft SIA disabled
+    NSF-aware route hold timer is 240
+    Router-ID: 10.255.4.4
+    Topology : 0 (base)
+      Active Timer: 3 min
+      Distance: internal 90 external 170
+      Maximum path: 4
+      Maximum hopcount 100
+      Maximum metric variance 1
+      Total Prefix Count: 3
+      Total Redist Count: 0
 
-BR1#how run interface tunnel0
-     ^
-% Invalid input detected at '^' marker.
+  Automatic Summarization: disabled
+  Maximum path: 4
+  Routing for Networks:
+    10.10.10.0/24
+    10.255.4.4/32
+    10.255.0.0/16
+  Routing Information Sources:
+    Gateway         Distance      Last Update
+    10.10.10.1            90      00:48:13
+  Distance: internal 90 external 170
+
+BR1#
+BR1#show run interface tunnel0
+Building configuration...
+
+Current configuration : 314 bytes
+!
+interface Tunnel0
+ description DMVPN-PH2-SPOKE
+ ip address 10.10.10.4 255.255.255.0
+ no ip redirects
+ ip nhrp authentication 12345
+ ip nhrp map 10.10.10.1 192.0.2.1
+ ip nhrp map multicast 192.0.2.1
+ ip nhrp network-id 10
+ ip nhrp nhs 10.10.10.1
+ tunnel source GigabitEthernet0/0
+ tunnel mode gre multipoint
+end
 
 BR1#
 BR1#show run | section router eigrp
