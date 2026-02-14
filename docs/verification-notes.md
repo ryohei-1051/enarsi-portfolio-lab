@@ -51,4 +51,3 @@ This file logs each baseline milestone (v0.x) with what was validated and where 
   - `show ip protocols`
   - `ping/traceroute` between loopbacks (e.g., BR1 → DC1/BR2)
 - Next: INC (EIGRP neighbor not forming / route filtering / split-horizon)
-
