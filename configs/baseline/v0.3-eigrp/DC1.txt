@@ -1,6 +1,6 @@
-Current configuration : 3849 bytes
+Current configuration : 3919 bytes
 !
-! Last configuration change at 08:18:16 UTC Tue Feb 10 2026
+! Last configuration change at 07:04:44 UTC Sat Feb 14 2026
 !
 version 15.9
 service timestamps debug datetime msec
@@ -110,10 +110,17 @@ router eigrp ENARSI
  !
  address-family ipv4 unicast autonomous-system 10
   !
+  af-interface default
+   passive-interface
+  exit-af-interface
+  !
+  af-interface Tunnel0
+   no passive-interface
+  exit-af-interface
+  !
   topology base
   exit-af-topology
   network 10.10.10.0 0.0.0.255
-  network 10.255.0.0 0.0.255.255
   network 10.255.3.3 0.0.0.0
   eigrp router-id 10.255.3.3
  exit-address-family
@@ -123,7 +130,6 @@ ip forward-protocol nd
 !
 no ip http server
 no ip http secure-server
-ip route 0.0.0.0 0.0.0.0 10.10.10.1
 !
 ipv6 ioam timestamp
 !
@@ -174,4 +180,3 @@ line vty 0 4
 no scheduler allocate
 !
 end
-
