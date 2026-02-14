@@ -1,6 +1,6 @@
-Current configuration : 3832 bytes
+Current configuration : 3926 bytes
 !
-! Last configuration change at 08:18:24 UTC Tue Feb 10 2026
+! Last configuration change at 07:22:58 UTC Sat Feb 14 2026
 !
 version 15.9
 service timestamps debug datetime msec
@@ -109,13 +109,20 @@ router eigrp ENARSI
  !
  address-family ipv4 unicast autonomous-system 10
   !
+  af-interface default
+   passive-interface
+  exit-af-interface
+  !
+  af-interface Tunnel0
+   no next-hop-self
+   no passive-interface
+   no split-horizon
+  exit-af-interface
+  !
   topology base
-   redistribute static
   exit-af-topology
   network 10.10.10.0 0.0.0.255
-  network 10.255.0.0 0.0.255.255
   network 10.255.1.1 0.0.0.0
-  network 10.255.3.3 0.0.0.0
   eigrp router-id 10.255.1.1
  exit-address-family
 !
