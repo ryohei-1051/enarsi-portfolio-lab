@@ -1,0 +1,99 @@
+HQ1(tcl)#tclsh
+HQ1(tcl)#foreach X {
++>10.255.1.1
++>10.255.3.3
++>10.255.4.4
++>10.255.5.5
++>} {ping $X rep 2 }
+Type escape sequence to abort.
+Sending 2, 100-byte ICMP Echos to 10.255.1.1, timeout is 2 seconds:
+!!
+Success rate is 100 percent (2/2), round-trip min/avg/max = 1/1/1 ms
+Type escape sequence to abort.
+Sending 2, 100-byte ICMP Echos to 10.255.3.3, timeout is 2 seconds:
+!!
+Success rate is 100 percent (2/2), round-trip min/avg/max = 2/2/3 ms
+Type escape sequence to abort.
+Sending 2, 100-byte ICMP Echos to 10.255.4.4, timeout is 2 seconds:
+!!
+Success rate is 100 percent (2/2), round-trip min/avg/max = 2/2/3 ms
+Type escape sequence to abort.
+Sending 2, 100-byte ICMP Echos to 10.255.5.5, timeout is 2 seconds:
+!!
+Success rate is 100 percent (2/2), round-trip min/avg/max = 2/2/2 ms
+HQ1(tcl)#
+
+DC1(tcl)#tclsh
+DC1(tcl)#foreach X {
++>10.255.1.1
++>10.255.3.3
++>10.255.4.4
++>10.255.5.5
++>} {ping $X rep 2 }
+Type escape sequence to abort.
+Sending 2, 100-byte ICMP Echos to 10.255.1.1, timeout is 2 seconds:
+!!
+Success rate is 100 percent (2/2), round-trip min/avg/max = 2/2/3 ms
+Type escape sequence to abort.
+Sending 2, 100-byte ICMP Echos to 10.255.3.3, timeout is 2 seconds:
+!!
+Success rate is 100 percent (2/2), round-trip min/avg/max = 1/1/1 ms
+Type escape sequence to abort.
+Sending 2, 100-byte ICMP Echos to 10.255.4.4, timeout is 2 seconds:
+!!
+Success rate is 100 percent (2/2), round-trip min/avg/max = 2/3/4 ms
+Type escape sequence to abort.
+Sending 2, 100-byte ICMP Echos to 10.255.5.5, timeout is 2 seconds:
+!!
+Success rate is 100 percent (2/2), round-trip min/avg/max = 2/2/3 ms
+DC1(tcl)#
+
+BR1(tcl)#tclsh
+BR1(tcl)#foreach X {
++>10.255.1.1
++>10.255.3.3
++>10.255.4.4
++>10.255.5.5
++>} {ping $X rep 2 }
+Type escape sequence to abort.
+Sending 2, 100-byte ICMP Echos to 10.255.1.1, timeout is 2 seconds:
+!!
+Success rate is 100 percent (2/2), round-trip min/avg/max = 2/2/3 ms
+Type escape sequence to abort.
+Sending 2, 100-byte ICMP Echos to 10.255.3.3, timeout is 2 seconds:
+!!
+Success rate is 100 percent (2/2), round-trip min/avg/max = 2/2/2 ms
+Type escape sequence to abort.
+Sending 2, 100-byte ICMP Echos to 10.255.4.4, timeout is 2 seconds:
+!!
+Success rate is 100 percent (2/2), round-trip min/avg/max = 1/1/1 ms
+Type escape sequence to abort.
+Sending 2, 100-byte ICMP Echos to 10.255.5.5, timeout is 2 seconds:
+!!
+Success rate is 100 percent (2/2), round-trip min/avg/max = 2/2/2 ms
+BR1(tcl)#
+
+BR2(tcl)#tclsh
+BR2(tcl)#foreach X {
++>10.255.1.1
++>10.255.3.3
++>10.255.4.4
++>10.255.5.5
++>} {ping $X rep 2 }
+Type escape sequence to abort.
+Sending 2, 100-byte ICMP Echos to 10.255.1.1, timeout is 2 seconds:
+!!
+Success rate is 100 percent (2/2), round-trip min/avg/max = 2/2/3 ms
+Type escape sequence to abort.
+Sending 2, 100-byte ICMP Echos to 10.255.3.3, timeout is 2 seconds:
+!!
+Success rate is 100 percent (2/2), round-trip min/avg/max = 2/3/5 ms
+Type escape sequence to abort.
+Sending 2, 100-byte ICMP Echos to 10.255.4.4, timeout is 2 seconds:
+!!
+Success rate is 100 percent (2/2), round-trip min/avg/max = 3/3/3 ms
+Type escape sequence to abort.
+Sending 2, 100-byte ICMP Echos to 10.255.5.5, timeout is 2 seconds:
+!!
+Success rate is 100 percent (2/2), round-trip min/avg/max = 1/1/1 ms
+BR2(tcl)#
