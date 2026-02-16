@@ -1,9 +1,35 @@
 # Baseline Verification Checklist (docs/verification-checklist.md)
+
+## v0.1 (DMVPN Phase 2)
 - `show ip int brief` (target interfaces are **up/up**)
-- `ping` to the directly-connected peer (link reachability)
+- `show interface tunnel0` (tunnel is **up/up**, MTU, counters)
+- `show dmvpn` (peers are present / tunnel status)
+- `show ip nhrp` (registrations are present and correct)
+- `show run interface tunnel0` (DMVPN/NHRP key settings)
+- (Hub) `show running-config all | section interface Tunnel0` (confirm `ip nhrp map multicast dynamic` if used)
+- `ping` to the tunnel hub IP (basic overlay reachability)
+
+## v0.2 (OSPF over DMVPN)
+- `show ip int brief` (target interfaces are **up/up**)
+- `show dmvpn`
+- `show ip nhrp`
 - `show ip ospf neighbor` (neighbors are **FULL**)
-- `show ip ospf interface <if>` (area / auth / hello-dead / MTU)
+- `show ip ospf interface tunnel0` (area / timers / auth / MTU)
 - `show ip route ospf` (expected OSPF routes installed)
+- `show run interface tunnel0`
+- `ping` to remote loopbacks (reachability)
 - `traceroute` (expected path)
-- *(Optional)* link down/up to validate convergence (IP SLA / track if used)
-- 
+
+## v0.3 (EIGRP over DMVPN)
+- `show ip int brief` (target interfaces are **up/up**)
+- `show dmvpn`
+- `show ip nhrp`
+- `show ip eigrp neighbors` (neighbors are present / stable)
+- `show ip route eigrp` (expected EIGRP routes installed)
+- `show ip protocols` (EIGRP networks / passive-interface)
+- `show run interface tunnel0` (DMVPN/NHRP settings)
+- `show run | section router eigrp` (required EIGRP config)
+- (Hub) `show run interface tunnel0 | include split-horizon|next-hop-self` (spoke-to-spoke support)
+- (Hub) `show running-config all | section interface Tunnel0` (confirm `ip nhrp map multicast dynamic`)
+- `ping` to remote loopbacks (spoke-to-spoke reachability)
+- `traceroute` (expected path)
