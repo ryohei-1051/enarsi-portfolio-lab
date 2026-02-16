@@ -9,6 +9,8 @@
 - `ping` to the tunnel hub IP (basic overlay reachability)
 
 ## v0.2 (OSPF over DMVPN)
+- (HQ1 only, optional) `show dmvpn` (overlay peer sanity)
+- (HQ1 only, optional) `show ip nhrp` (registrations / mappings)
 - `show ip int brief` (target interfaces are **up/up**)
 - `show ip ospf neighbor` (neighbors are **FULL**)
 - `show ip ospf interface tunnel0` (area / timers / auth / MTU)
@@ -18,6 +20,8 @@
 - `traceroute` (expected path)
 
 ## v0.3 (EIGRP over DMVPN)
+- (HQ1 only, optional) `show dmvpn` (overlay peer sanity)
+- (HQ1 only, optional) `show ip nhrp` (registrations / mappings)
 - `show ip int brief` (target interfaces are **up/up**)
 - `show ip eigrp neighbors` (neighbors are present / stable)
 - `show ip route eigrp` (expected EIGRP routes installed)
