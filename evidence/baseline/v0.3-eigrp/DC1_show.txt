@@ -7,30 +7,6 @@ GigabitEthernet0/3         unassigned      YES NVRAM  administratively down down
 Loopback0                  10.255.3.3      YES NVRAM  up                    up
 Tunnel0                    10.10.10.3      YES NVRAM  up                    up
 DC1#
-DC1#show dmvpn
-Legend: Attrb --> S - Static, D - Dynamic, I - Incomplete
-        N - NATed, L - Local, X - No Socket
-        T1 - Route Installed, T2 - Nexthop-override
-        C - CTS Capable, I2 - Temporary
-        # Ent --> Number of NHRP entries with same NBMA peer
-        NHS Status: E --> Expecting Replies, R --> Responding, W --> Waiting
-        UpDn Time --> Up or Down Time for a Tunnel
-==========================================================================
-
-Interface: Tunnel0, IPv4 NHRP Details
-Type:Spoke, NHRP Peers:1,
-
- # Ent  Peer NBMA Addr Peer Tunnel Add State  UpDn Tm Attrb
- ----- --------------- --------------- ----- -------- -----
-     1 192.0.2.1            10.10.10.1    UP 01:15:22     S
-
-DC1#
-DC1#show ip nhrp
-10.10.10.1/32 via 10.10.10.1
-   Tunnel0 created 01:15:58, never expire
-   Type: static, Flags: used
-   NBMA address: 192.0.2.1
-DC1#
 DC1#show ip eigrp neighbors
 EIGRP-IPv4 VR(ENARSI) Address-Family Neighbors for AS(10)
 H   Address                 Interface              Hold Uptime   SRTT   RTO  Q  Seq
@@ -118,4 +94,28 @@ router eigrp ENARSI
   network 10.255.3.3 0.0.0.0
   eigrp router-id 10.255.3.3
  exit-address-family
+DC1#
+DC1#show dmvpn
+Legend: Attrb --> S - Static, D - Dynamic, I - Incomplete
+        N - NATed, L - Local, X - No Socket
+        T1 - Route Installed, T2 - Nexthop-override
+        C - CTS Capable, I2 - Temporary
+        # Ent --> Number of NHRP entries with same NBMA peer
+        NHS Status: E --> Expecting Replies, R --> Responding, W --> Waiting
+        UpDn Time --> Up or Down Time for a Tunnel
+==========================================================================
+
+Interface: Tunnel0, IPv4 NHRP Details
+Type:Spoke, NHRP Peers:1,
+
+ # Ent  Peer NBMA Addr Peer Tunnel Add State  UpDn Tm Attrb
+ ----- --------------- --------------- ----- -------- -----
+     1 192.0.2.1            10.10.10.1    UP 01:15:22     S
+
+DC1#
+DC1#show ip nhrp
+10.10.10.1/32 via 10.10.10.1
+   Tunnel0 created 01:15:58, never expire
+   Type: static, Flags: used
+   NBMA address: 192.0.2.1
 DC1#
