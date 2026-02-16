@@ -1,7 +1,30 @@
 # Recommended Show Command Set (save in this order each time)
-- **Interface status:** `show ip int brief`
-- **OSPF:** `show ip ospf neighbor` / `show ip ospf interface <if>` / `show ip ospf`
-- **Routing:** `show ip route` / `show ip route ospf`
-- **Forwarding tests:** `traceroute <dest>` / `ping <dest>`
-- **Config diff points:** `show run interface <if>` / `show run | section router ospf`
-- 
+## v0.1 (DMVPN Phase 2)
+- `show ip int brief` (target interfaces are **up/up**)
+- `show interface tunnel0` (tunnel is **up/up**, MTU, counters)
+- `show dmvpn` (peers are present / tunnel status)
+- `show ip nhrp` (registrations are present and correct)
+- `show run interface tunnel0` (DMVPN/NHRP key settings)
+- (Hub) `show running-config all | section interface Tunnel0` (confirm `ip nhrp map multicast dynamic` if used)
+- `ping` to the tunnel hub IP (basic overlay reachability)
+
+## v0.2 (OSPF over DMVPN)
+- `show ip int brief` (target interfaces are **up/up**)
+- `show ip ospf neighbor` (neighbors are **FULL**)
+- `show ip ospf interface tunnel0` (area / timers / auth / MTU)
+- `show ip route ospf` (expected OSPF routes installed)
+- `show run interface tunnel0`
+- `ping` to remote loopbacks (reachability)
+- `traceroute` (expected path)
+
+## v0.3 (EIGRP over DMVPN)
+- `show ip int brief` (target interfaces are **up/up**)
+- `show ip eigrp neighbors` (neighbors are present / stable)
+- `show ip route eigrp` (expected EIGRP routes installed)
+- `show ip protocols` (EIGRP networks / passive-interface)
+- `show run interface tunnel0` (DMVPN/NHRP settings)
+- `show run | section router eigrp` (required EIGRP config)
+- (Hub) `show run interface tunnel0 | include split-horizon|next-hop-self` (spoke-to-spoke support)
+- (Hub) `show running-config all | section interface Tunnel0` (confirm `ip nhrp map multicast dynamic`)
+- `ping` to remote loopbacks (spoke-to-spoke reachability)
+- `traceroute` (expected path)
