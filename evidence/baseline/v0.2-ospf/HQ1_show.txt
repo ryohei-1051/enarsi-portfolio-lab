@@ -7,40 +7,6 @@ GigabitEthernet0/3         unassigned      YES NVRAM  administratively down down
 Loopback0                  10.255.1.1      YES manual up                    up
 Tunnel0                    10.10.10.1      YES NVRAM  up                    up
 HQ1#
-HQ1#show dmvpn
-Legend: Attrb --> S - Static, D - Dynamic, I - Incomplete
-        N - NATed, L - Local, X - No Socket
-        T1 - Route Installed, T2 - Nexthop-override
-        C - CTS Capable, I2 - Temporary
-        # Ent --> Number of NHRP entries with same NBMA peer
-        NHS Status: E --> Expecting Replies, R --> Responding, W --> Waiting
-        UpDn Time --> Up or Down Time for a Tunnel
-==========================================================================
-
-Interface: Tunnel0, IPv4 NHRP Details
-Type:Hub, NHRP Peers:3,
-
- # Ent  Peer NBMA Addr Peer Tunnel Add State  UpDn Tm Attrb
- ----- --------------- --------------- ----- -------- -----
-     1 192.0.2.3            10.10.10.3    UP 02:11:36     D
-     1 192.0.2.4            10.10.10.4    UP 02:11:35     D
-     1 192.0.2.5            10.10.10.5    UP 02:11:34     D
-
-HQ1#
-HQ1#show ip nhrp
-10.10.10.3/32 via 10.10.10.3
-   Tunnel0 created 02:11:36, expire 00:07:36
-   Type: dynamic, Flags: registered used nhop
-   NBMA address: 192.0.2.3
-10.10.10.4/32 via 10.10.10.4
-   Tunnel0 created 02:11:35, expire 00:07:43
-   Type: dynamic, Flags: registered used nhop
-   NBMA address: 192.0.2.4
-10.10.10.5/32 via 10.10.10.5
-   Tunnel0 created 02:11:34, expire 00:07:53
-   Type: dynamic, Flags: registered nhop
-   NBMA address: 192.0.2.5
-HQ1#
 HQ1#show ip ospf neighbor
 
 Neighbor ID     Pri   State           Dead Time   Address         Interface
@@ -110,4 +76,38 @@ interface Tunnel0
  tunnel mode gre multipoint
 end
 
+HQ1#
+HQ1#show dmvpn
+Legend: Attrb --> S - Static, D - Dynamic, I - Incomplete
+        N - NATed, L - Local, X - No Socket
+        T1 - Route Installed, T2 - Nexthop-override
+        C - CTS Capable, I2 - Temporary
+        # Ent --> Number of NHRP entries with same NBMA peer
+        NHS Status: E --> Expecting Replies, R --> Responding, W --> Waiting
+        UpDn Time --> Up or Down Time for a Tunnel
+==========================================================================
+
+Interface: Tunnel0, IPv4 NHRP Details
+Type:Hub, NHRP Peers:3,
+
+ # Ent  Peer NBMA Addr Peer Tunnel Add State  UpDn Tm Attrb
+ ----- --------------- --------------- ----- -------- -----
+     1 192.0.2.3            10.10.10.3    UP 02:11:36     D
+     1 192.0.2.4            10.10.10.4    UP 02:11:35     D
+     1 192.0.2.5            10.10.10.5    UP 02:11:34     D
+
+HQ1#
+HQ1#show ip nhrp
+10.10.10.3/32 via 10.10.10.3
+   Tunnel0 created 02:11:36, expire 00:07:36
+   Type: dynamic, Flags: registered used nhop
+   NBMA address: 192.0.2.3
+10.10.10.4/32 via 10.10.10.4
+   Tunnel0 created 02:11:35, expire 00:07:43
+   Type: dynamic, Flags: registered used nhop
+   NBMA address: 192.0.2.4
+10.10.10.5/32 via 10.10.10.5
+   Tunnel0 created 02:11:34, expire 00:07:53
+   Type: dynamic, Flags: registered nhop
+   NBMA address: 192.0.2.5
 HQ1#
