@@ -11,19 +11,17 @@
 
 ## v0.2 (OSPF over DMVPN)
 - `show ip int brief` (target interfaces are **up/up**)
-- `show dmvpn`
-- `show ip nhrp`
 - `show ip ospf neighbor` (neighbors are **FULL**)
 - `show ip ospf interface tunnel0` (area / timers / auth / MTU)
 - `show ip route ospf` (expected OSPF routes installed)
 - `show run interface tunnel0`
 - `ping` to remote loopbacks (reachability)
 - `traceroute` (expected path)
+- (Optional / If DMVPN changed or issues suspected) `show dmvpn` (overlay peers)
+- (Optional / If DMVPN changed or issues suspected) `show ip nhrp` (registrations / mappings)
 
 ## v0.3 (EIGRP over DMVPN)
 - `show ip int brief` (target interfaces are **up/up**)
-- `show dmvpn`
-- `show ip nhrp`
 - `show ip eigrp neighbors` (neighbors are present / stable)
 - `show ip route eigrp` (expected EIGRP routes installed)
 - `show ip protocols` (EIGRP networks / passive-interface)
@@ -33,3 +31,5 @@
 - (Hub) `show running-config all | section interface Tunnel0` (confirm `ip nhrp map multicast dynamic`)
 - `ping` to remote loopbacks (spoke-to-spoke reachability)
 - `traceroute` (expected path)
+- (Optional / If DMVPN changed or issues suspected) `show dmvpn` (overlay peers)
+- (Optional / If DMVPN changed or issues suspected) `show ip nhrp` (registrations / mappings)
