@@ -23,16 +23,23 @@ Network: `192.0.2.0/24` (documentation prefix)
 
 ---
 
-## 2) HQ1–ISP/HQ2–ISP Link (BGP Transport)
+## 2-1) HQ1–ISP Link (BGP Transport) — v0.5a
 
 | Device | IF | IPv4 Address | Prefix | Notes |
 |---|---|---:|---:|---|
-| HQ1 | Gi0/1 | 192.0.1.1 | /24 | eBGP neighbor transport |
-| ISP | Gi0/1 | 192.0.1.2 | /24 | eBGP neighbor transport |
-| HQ2 | Gi0/1 | 192.0.3.1 | /24 | eBGP neighbor transport |
-| ISP | Gi0/1 | 192.0.3.2 | /24 | eBGP neighbor transport |
+| HQ1 | Gi0/1 | 192.0.1.1 | /30 | eBGP neighbor transport |
+| ISP | Gi0/1 | 192.0.1.2 | /30 | eBGP neighbor transport |
 
-Network: `192.0.1.0/24`(HQ1–ISP)`192.0.3.0/24`(HQ2–ISP)
+Network: `192.0.1.0/30`
+
+## 2-2) HQ2–ISP Link (BGP Transport) — v0.5b
+
+| Device | IF | IPv4 Address | Prefix | Notes |
+|---|---|---:|---:|---|
+| HQ2 | Gi0/1 | 192.0.3.1 | /30 | eBGP transport to ISP |
+| ISP | Gi0/2 | 192.0.3.2 | /30 | eBGP transport to HQ2 |
+
+Network: `192.0.3.0/30`
 
 ---
 
