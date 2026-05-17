@@ -71,14 +71,14 @@ interface Loopback1
  ip address 198.51.100.1 255.255.255.255
 !
 interface GigabitEthernet0/0
- description NBMA-underlay-to-HQ1
  no ip address
  duplex auto
  speed auto
  media-type rj45
 !
 interface GigabitEthernet0/1
- ip address 192.0.1.2 255.255.255.0
+ description BGP-TRANSIT-to-HQ1
+ ip address 192.0.1.2 255.255.255.252
  duplex auto
  speed auto
  media-type rj45
