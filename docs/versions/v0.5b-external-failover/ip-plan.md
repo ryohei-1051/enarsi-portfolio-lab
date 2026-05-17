@@ -94,7 +94,7 @@ NBMA subnet：` 192.0.2.0/24`
 | ISP AS | 65002 |
 | HQ1–ISP neighbor | HQ1(192.0.1.1) ↔ ISP(192.0.1.2) |
 | HQ2–ISP neighbor | HQ2(192.0.3.1) ↔ ISP(192.0.3.2) |
-| Policy | inbound filter on HQ1/HQ2 (accept 203.0.113.1/32 only) |
+| Policy | inbound filter on HQ1/HQ2 (Allowed: 203.0.113.1/32, Blocked: 198.51.100.1/32) |
 
 ### EIGRP redistribution
 - HQ1 and HQ2 redistribute the allowed BGP prefix into EIGRP using `route-map BGP-TO-EIGRP` with explicit metric.
