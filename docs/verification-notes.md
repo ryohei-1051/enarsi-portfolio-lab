@@ -71,7 +71,7 @@ This file logs each baseline milestone (v0.x) with what was validated and where 
 
 ---
 
-## v0.5-dual-hub (Dual Hub + failover over DMVPN)
+## v0.5a-dual-hub (Dual Hub + failover over DMVPN)
 - Result:
   - HQ2 enabled as a secondary DMVPN hub; spokes registered to both hubs (NHRP)
   - EIGRP neighbors established to HQ1 and HQ2 over Tunnel0
@@ -88,3 +88,17 @@ This file logs each baseline milestone (v0.x) with what was validated and where 
   - Convergence time was recorded as a rough indicator only; results varied between runs in the GNS3 environment.
   - Validation focuses on path switch + restored reachability after failover.
 - Next: v0.5b external failover (BGP on HQ2) or convergence tuning (SLA/track)
+
+## v0.5b-external-failover (BGP on HQ2 + external reachability failover)
+- Result:
+  - HQ2 established eBGP with ISP and applied inbound policy (allowed prefix accepted; blocked prefix rejected)
+  - Allowed prefix redistributed into EIGRP from HQ2 and reachable from spokes
+  - External reachability to the allowed prefix remained available during HQ1 shutdown (failover validated)
+- Evidence: `evidence/baseline/v0.5b-external-failover/`
+- Configs: `configs/baseline/v0.5b-external-failover/`
+- Key checks:
+  - HQ2: `show ip bgp summary`, `show ip bgp`, `received-routes`, `show ip eigrp topology 203.0.113.1/32`
+  - BR1: allowed ping success + blocked ping failure, `show ip route` (allowed present / blocked absent)
+- Convergence (indicator only):
+  - Timing may vary in GNS3; validation focuses on policy correctness + reachability during failover.
+- Next: repository review + (optional) SLA/track and convergence tuning
