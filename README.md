@@ -27,7 +27,7 @@ I use **GNS3 (primary)** and **Packet Tracer (supporting)** to build a reproduci
 | v0.3-eigrp | EIGRP neighbors up; loopbacks exchanged; spoke-to-spoke reachability | `configs/baseline/v0.3-eigrp/` | `evidence/baseline/v0.3-eigrp/` |
 | v0.4-bgp | eBGP + inbound filter; selective redistribution into EIGRP | `configs/baseline/v0.4-bgp/` | `evidence/baseline/v0.4-bgp/` |
 | v0.5a-dual-hub | Dual hub failover; HQ1 down → HQ2 control-plane; Phase 2 shortcut | `configs/baseline/v0.5a-dual-hub/` | `evidence/baseline/v0.5a-dual-hub/` |
-| v0.5b-external-failover | Dual hub failover; HQ1 down → HQ2 control-plane; Phase 2 shortcut | `configs/baseline/v0.5b-external-failover/` | `evidence/baseline/v0.5b-external-failover/` |
+| v0.5b-external-failover | BGP on HQ2 + external reachability failover; Phase 2 shortcut | `configs/baseline/v0.5b-external-failover/` | `evidence/baseline/v0.5b-external-failover/` |
 
 ### Quick links
 - Start here (design): [docs/routing-design.md](docs/routing-design.md)
