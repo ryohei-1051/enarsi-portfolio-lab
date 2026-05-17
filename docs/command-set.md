@@ -81,7 +81,7 @@ Purpose: capture consistent evidence in a fixed order so outputs are comparable 
 
 ---
 
-## v0.5-dual-hub (Dual Hub + failover over DMVPN Phase 2)
+## v0.5a-dual-hub (Dual Hub + failover over DMVPN Phase 2)
 ### Normal state (before failover) — BR1 recommended
 - `show ip eigrp neighbors`
 - `traceroute 10.255.3.3` (or another remote loopback)
