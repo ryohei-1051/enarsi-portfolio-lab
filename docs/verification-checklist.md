@@ -56,7 +56,7 @@ Use `docs/command-set.md` to capture evidence in a consistent order.
 
 ---
 
-## v0.5-dual-hub (Dual Hub + failover over DMVPN Phase 2)
+## v0.5a-dual-hub (Dual Hub + failover over DMVPN Phase 2)
 ### Normal state
 - Spokes have EIGRP neighbors to **HQ1 and HQ2**
   - `show ip eigrp neighbors`
