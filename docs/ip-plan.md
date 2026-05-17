@@ -78,4 +78,4 @@ Loopbacks are used to validate routing reachability and will be advertised via d
   - `v0.3-eigrp`  : EIGRP over DMVPN (neighbors established + route exchange)
   - `v0.4-bgp`  : eBGP + inbound filter + selective redistribution into EIGRP
   - `v0.5a-dual-hub`  : Dual Hub + failover over DMVPN Phase 2
-  - `v0.5b-external-failover`  : Dual Hub + failover over DMVPN Phase 2
+  - `v0.5b-external-failover`  : BGP on HQ2 + external reachability failover
