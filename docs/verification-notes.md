@@ -75,12 +75,16 @@ This file logs each baseline milestone (v0.x) with what was validated and where 
 - Result:
   - HQ2 enabled as a secondary DMVPN hub; spokes registered to both hubs (NHRP)
   - EIGRP neighbors established to HQ1 and HQ2 over Tunnel0
-  - Failover test: HQ1 Tunnel0 shutdown → spoke-to-spoke reachability restored via HQ2 control-plane
-  - Data-plane optimized via DMVPN Phase 2 shortcut (direct spoke-to-spoke forwarding after NHRP resolution)
+  - Failover test: HQ1 Tunnel0 shutdown → reachability restored with HQ2 as the control-plane path
+  - DMVPN Phase 2 shortcut formed for data-plane (direct spoke-to-spoke forwarding after NHRP resolution)
 - Evidence: `evidence/baseline/v0.5-dual-hub/`
 - Configs: `configs/baseline/v0.5-dual-hub/`
 - Key checks:
-  - `show ip eigrp neighbors` (HQ1 down, HQ2 up)
-  - `show ip route <remote loopback>` / `traceroute` / `ping repeat` (convergence + reachability)
-  - `show ip nhrp` / `show dmvpn` (shortcut/peer evidence)
+  - `show ip eigrp neighbors` (HQ1 down, HQ2 remains)
+  - `show ip route <remote loopback>` (route sourced via HQ2)
+  - `traceroute` + `ping repeat` (reachability before/after failover)
+  - `show ip nhrp` / `show dmvpn` (NHRP registration + shortcut evidence)
+- Convergence (indicator only):
+  - Convergence time was recorded as a rough indicator only; results varied between runs in the GNS3 environment.
+  - Validation focuses on path switch + restored reachability after failover.
 - Next: v0.5b external failover (BGP on HQ2) or convergence tuning (SLA/track)
