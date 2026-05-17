@@ -56,13 +56,16 @@ This file logs each baseline milestone (v0.x) with what was validated and where 
 
 ## v0.4-bgp (eBGP + inbound filtering + selective redistribution)
 - Result:
-  - eBGP established between HQ1 (AS65001) and ISP (AS65002)
+  - eBGP established between HQ1 (AS65001) and ISP (AS65002) over 192.0.1.0/24
   - ISP advertised two external prefixes; HQ1 accepted only the allowed prefix via inbound policy
   - Allowed prefix redistributed into EIGRP and reached spokes; blocked prefix not reachable as intended
 - Evidence: `evidence/baseline/v0.4-bgp/`
 - Configs: `configs/baseline/v0.4-bgp/`
 - Key checks:
   - HQ1: `show ip bgp summary`, `show ip bgp`, `show ip bgp neighbors <ISP> received-routes`
-  - Spokes: `show ip route eigrp`, `ping/traceroute` to allowed vs blocked prefix
+  - HQ1: `show ip eigrp topology 203.0.113.1/32` (BGP→EIGRP injection)
+  - Spokes: `show ip route <allowed/blocked>`, `ping/traceroute` to allowed vs blocked prefix
+- Notes:
+  - `received-routes` shows both prefixes due to inbound soft reconfiguration; bestpath/RIB reflects the inbound filter.
 - Next: v0.5 dual-hub / failover and convergence measurement
 
