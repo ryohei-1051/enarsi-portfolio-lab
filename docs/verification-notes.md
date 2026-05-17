@@ -69,3 +69,18 @@ This file logs each baseline milestone (v0.x) with what was validated and where 
   - `received-routes` shows both prefixes due to inbound soft reconfiguration; bestpath/RIB reflects the inbound filter.
 - Next: v0.5 dual-hub / failover and convergence measurement
 
+---
+
+## v0.5-dual-hub (Dual Hub + failover over DMVPN)
+- Result:
+  - HQ2 enabled as a secondary DMVPN hub; spokes registered to both hubs (NHRP)
+  - EIGRP neighbors established to HQ1 and HQ2
+  - Failover test: HQ1 Tunnel0 shutdown → spoke-to-spoke reachability restored via HQ2
+  - Recovery: HQ1 restored and preference returned to primary
+- Evidence: `evidence/baseline/v0.5-dual-hub/`
+- Configs: `configs/baseline/v0.5-dual-hub/`
+- Key checks:
+  - `show dmvpn`, `show ip nhrp`, `show ip eigrp neighbors`
+  - `traceroute` path change (HQ1 → HQ2)
+  - `ping repeat` output as convergence evidence
+- Next: v0.5b external failover (BGP on HQ2) or v0.6 convergence tuning (SLA/track)
