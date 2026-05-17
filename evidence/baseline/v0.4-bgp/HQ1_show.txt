@@ -1,0 +1,66 @@
+HQ1#
+HQ1#show ip bgp summary
+BGP router identifier 10.255.1.1, local AS number 65001
+BGP table version is 6, main routing table version 6
+2 network entries using 288 bytes of memory
+2 path entries using 168 bytes of memory
+1/1 BGP path/bestpath attribute entries using 160 bytes of memory
+1 BGP AS-PATH entries using 24 bytes of memory
+0 BGP route-map cache entries using 0 bytes of memory
+0 BGP filter-list cache entries using 0 bytes of memory
+BGP using 640 total bytes of memory
+1 received paths for inbound soft reconfiguration
+BGP activity 4/2 prefixes, 4/2 paths, scan interval 60 secs
+
+Neighbor        V           AS MsgRcvd MsgSent   TblVer  InQ OutQ Up/Down  State/PfxRcd
+192.0.1.2       4        65002      59      60        6    0    0 00:45:57        1
+HQ1#
+HQ1#
+HQ1#show ip bgp
+BGP table version is 6, local router ID is 10.255.1.1
+Status codes: s suppressed, d damped, h history, * valid, > best, i - internal,
+              r RIB-failure, S Stale, m multipath, b backup-path, f RT-Filter,
+              x best-external, a additional-path, c RIB-compressed,
+              t secondary path,
+Origin codes: i - IGP, e - EGP, ? - incomplete
+RPKI validation codes: V valid, I invalid, N Not found
+
+     Network          Next Hop            Metric LocPrf Weight Path
+ *>   203.0.113.1/32   192.0.1.2                0             0 65002 i
+HQ1#
+HQ1#
+HQ1#show ip bgp neighbors 192.0.1.2 received-routes
+BGP table version is 6, local router ID is 10.255.1.1
+Status codes: s suppressed, d damped, h history, * valid, > best, i - internal,
+              r RIB-failure, S Stale, m multipath, b backup-path, f RT-Filter,
+              x best-external, a additional-path, c RIB-compressed,
+              t secondary path,
+Origin codes: i - IGP, e - EGP, ? - incomplete
+RPKI validation codes: V valid, I invalid, N Not found
+
+     Network          Next Hop            Metric LocPrf Weight Path
+ *    198.51.100.1/32  192.0.1.2                0             0 65002 i
+ *>   203.0.113.1/32   192.0.1.2                0             0 65002 i
+
+Total number of prefixes 2
+HQ1#
+HQ1#
+HQ1#show ip eigrp topology 203.0.113.1/32
+EIGRP-IPv4 VR(ENARSI) Topology Entry for AS(10)/ID(10.255.1.1) for 203.0.113.1/32
+  State is Passive, Query origin flag is 1, 1 Successor(s), FD is 131072000
+  Descriptor Blocks:
+  192.0.1.2, from Redistributed, Send flag is 0x0
+      Composite metric is (131072000/0), route is External
+      Vector metric:
+        Minimum bandwidth is 10000 Kbit
+        Total delay is 1000000000 picoseconds
+        Reliability is 255/255
+        Load is 1/255
+        Minimum MTU is 1500
+        Hop count is 0
+        Originating router is 10.255.1.1
+      External data:
+        AS number of route is 65001
+        External protocol is BGP, external metric is 0
+        Administrator tag is 65002 (0x0000FDEA)
+HQ1#

@@ -1,0 +1,41 @@
+BR1#
+BR1#show ip route 203.0.113.1
+Routing entry for 203.0.113.1/32
+  Known via "eigrp 10", distance 170, metric 77312000
+  Tag 65002, type external
+  Redistributing via eigrp 10
+  Last update from 10.10.10.1 on Tunnel0, 00:04:53 ago
+  Routing Descriptor Blocks:
+  * 10.10.10.1, from 10.10.10.1, 00:04:53 ago, via Tunnel0
+      Route metric is 77312000, traffic share count is 1
+      Total delay is 51000 microseconds, minimum bandwidth is 100 Kbit
+      Reliability 255/255, minimum MTU 1476 bytes
+      Loading 1/255, Hops 1
+      Route tag 65002
+BR1#
+BR1#
+BR1#show ip route 198.51.100.1
+% Network not in table
+BR1#
+BR1#
+BR1#ping 203.0.113.1
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 203.0.113.1, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 1/2/4 ms
+BR1#
+BR1#
+BR1#ping 198.51.100.1
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 198.51.100.1, timeout is 2 seconds:
+.....
+Success rate is 0 percent (0/5)
+BR1#
+BR1#
+BR1#traceroute 203.0.113.1
+Type escape sequence to abort.
+Tracing the route to 203.0.113.1
+VRF info: (vrf in name/id, vrf out name/id)
+  1 10.10.10.1 2 msec 2 msec 2 msec
+  2 192.0.1.2 2 msec 2 msec 1 msec
+BR1#
