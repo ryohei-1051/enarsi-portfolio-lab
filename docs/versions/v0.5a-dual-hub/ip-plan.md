@@ -1,6 +1,7 @@
 # IP Plan (Snapshot) — v0.5a-dual-hub
 
-This snapshot reflects baseline v0.4 (eBGP + inbound filtering + selective redistribution into EIGRP).
+This snapshot reflects baseline v0.5a (Dual Hub + internal failover over DMVPN Phase 2).
+> Note: HQ2–ISP transport is introduced in v0.5b; it is not present in v0.5a.
 
 ---
 
