@@ -1,0 +1,120 @@
+HQ2#
+HQ2#show ip int brief
+Interface                  IP-Address      OK? Method Status                Protocol
+GigabitEthernet0/0         192.0.2.2       YES manual up                    up
+GigabitEthernet0/1         192.0.3.1       YES manual up                    up
+GigabitEthernet0/2         unassigned      YES unset  administratively down down
+GigabitEthernet0/3         unassigned      YES unset  administratively down down
+Loopback0                  10.255.2.2      YES manual up                    up
+Tunnel0                    10.10.10.2      YES manual up                    up
+HQ2#
+HQ2#
+HQ2#show ip bgp summary
+BGP router identifier 10.255.2.2, local AS number 65001
+BGP table version is 2, main routing table version 2
+2 network entries using 288 bytes of memory
+2 path entries using 168 bytes of memory
+1/1 BGP path/bestpath attribute entries using 160 bytes of memory
+1 BGP AS-PATH entries using 24 bytes of memory
+0 BGP route-map cache entries using 0 bytes of memory
+0 BGP filter-list cache entries using 0 bytes of memory
+BGP using 640 total bytes of memory
+1 received paths for inbound soft reconfiguration
+BGP activity 2/0 prefixes, 2/0 paths, scan interval 60 secs
+
+Neighbor        V           AS MsgRcvd MsgSent   TblVer  InQ OutQ Up/Down  State/PfxRcd
+192.0.3.2       4        65002      78      74        2    0    0 01:05:25        1
+HQ2#
+HQ2#
+HQ2#show ip bgp
+BGP table version is 2, local router ID is 10.255.2.2
+Status codes: s suppressed, d damped, h history, * valid, > best, i - internal,
+              r RIB-failure, S Stale, m multipath, b backup-path, f RT-Filter,
+              x best-external, a additional-path, c RIB-compressed,
+              t secondary path,
+Origin codes: i - IGP, e - EGP, ? - incomplete
+RPKI validation codes: V valid, I invalid, N Not found
+
+     Network          Next Hop            Metric LocPrf Weight Path
+ *>   203.0.113.1/32   192.0.3.2                0             0 65002 i
+HQ2#
+HQ2#
+HQ2#show ip bgp neighbors 192.0.3.2 received-routes
+BGP table version is 2, local router ID is 10.255.2.2
+Status codes: s suppressed, d damped, h history, * valid, > best, i - internal,
+              r RIB-failure, S Stale, m multipath, b backup-path, f RT-Filter,
+              x best-external, a additional-path, c RIB-compressed,
+              t secondary path,
+Origin codes: i - IGP, e - EGP, ? - incomplete
+RPKI validation codes: V valid, I invalid, N Not found
+
+     Network          Next Hop            Metric LocPrf Weight Path
+ *    198.51.100.1/32  192.0.3.2                0             0 65002 i
+ *>   203.0.113.1/32   192.0.3.2                0             0 65002 i
+
+Total number of prefixes 2
+HQ2#
+HQ2#
+HQ2#show ip eigrp topology 203.0.113.1/32
+EIGRP-IPv4 VR(ENARSI) Topology Entry for AS(10)/ID(10.255.2.2) for 203.0.113.1/32
+  State is Passive, Query origin flag is 1, 1 Successor(s), FD is 131072000
+  Descriptor Blocks:
+  192.0.3.2, from Redistributed, Send flag is 0x0
+      Composite metric is (131072000/0), route is External
+      Vector metric:
+        Minimum bandwidth is 10000 Kbit
+        Total delay is 1000000000 picoseconds
+        Reliability is 255/255
+        Load is 1/255
+        Minimum MTU is 1500
+        Hop count is 0
+        Originating router is 10.255.2.2
+      External data:
+        AS number of route is 65001
+        External protocol is BGP, external metric is 0
+        Administrator tag is 65002 (0x0000FDEA)
+HQ2#
+HQ2#
+HQ2#show run | section router bgp
+router bgp 65001
+ bgp log-neighbor-changes
+ neighbor 192.0.3.2 remote-as 65002
+ neighbor 192.0.3.2 soft-reconfiguration inbound
+ neighbor 192.0.3.2 route-map ISP-IN in
+HQ2#
+HQ2#
+HQ2#show run | section route-map
+   redistribute bgp 65001 route-map BGP-TO-EIGRP
+ neighbor 192.0.3.2 route-map ISP-IN in
+route-map BGP-TO-EIGRP permit 10
+ match ip address prefix-list BGP-TO-EIGRP
+ set metric 10000 100 255 1 1500
+route-map BGP-TO-EIGRP deny 100
+route-map ISP-IN permit 10
+ match ip address prefix-list ISP-IN-ALLOW
+route-map ISP-IN deny 100
+HQ2#
+HQ2#
+HQ2#show run | section router eigrp
+router eigrp ENARSI
+ !
+ address-family ipv4 unicast autonomous-system 10
+  !
+  af-interface default
+   passive-interface
+  exit-af-interface
+  !
+  af-interface Tunnel0
+   no next-hop-self
+   no passive-interface
+   no split-horizon
+  exit-af-interface
+  !
+  topology base
+   redistribute bgp 65001 route-map BGP-TO-EIGRP
+  exit-af-topology
+  network 10.10.10.0 0.0.0.255
+  network 10.255.2.2 0.0.0.0
+  eigrp router-id 10.255.2.2
+ exit-address-family
+HQ2#
