@@ -1,1 +1,43 @@
+BR1#
+BR1#show ip eigrp neighbors
+EIGRP-IPv4 VR(ENARSI) Address-Family Neighbors for AS(10)
+H   Address                 Interface              Hold Uptime   SRTT   RTO  Q  Seq
+                                                   (sec)         (ms)       Cnt Num
+0   10.10.10.2              Tu0                      14 00:19:06    1  1470  0  93
+BR1#
+
+BR1#
+BR1#show ip route 10.255.3.3
+Routing entry for 10.255.3.3/32
+  Known via "eigrp 10", distance 90, metric 102400640, type internal
+  Redistributing via eigrp 10
+  Last update from 10.10.10.3 on Tunnel0, 00:03:52 ago
+  Routing Descriptor Blocks:
+  * 10.10.10.3, from 10.10.10.2, 00:03:52 ago, via Tunnel0
+      Route metric is 102400640, traffic share count is 1
+      Total delay is 100002 microseconds, minimum bandwidth is 100 Kbit
+      Reliability 255/255, minimum MTU 1476 bytes
+      Loading 1/255, Hops 2
+BR1#
+
+BR1#
+BR1#traceroute 10.255.3.3
+Type escape sequence to abort.
+Tracing the route to 10.255.3.3
+VRF info: (vrf in name/id, vrf out name/id)
+  1 10.10.10.2 5 msec 2 msec 1 msec
+  2 10.10.10.3 3 msec 7 msec 2 msec
+BR1#
+
+BR1#
+BR1#ping 10.255.3.3 repeat 200 timeout 1
+Type escape sequence to abort.
+Sending 200, 100-byte ICMP Echos to 10.255.3.3, timeout is 1 seconds:
+....
+*May 17 11:49:19.282: %DUAL-5-NBRCHANGE: EIGRP-IPv4 10: Neighbor 10.10.10.1 (Tunnel0) is down: holdi                                                                                                          ng time expired.
+*May 17 11:49:19.284: EIGRP: Build goodbye tlv for 10.10.10.1.......................................                                                                                                          ..........................
+..................................................................!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Success rate is 32 percent (64/200), round-trip min/avg/max = 1/1/3 ms
+BR1#
 

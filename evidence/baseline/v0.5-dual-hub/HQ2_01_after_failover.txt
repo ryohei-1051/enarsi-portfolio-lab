@@ -1,1 +1,79 @@
+HQ2#
+HQ2#show ip eigrp neighbors
+EIGRP-IPv4 VR(ENARSI) Address-Family Neighbors for AS(10)
+H   Address                 Interface              Hold Uptime   SRTT   RTO  Q  Seq
+                                                   (sec)         (ms)       Cnt Num
+0   10.10.10.4              Tu0                      12 00:10:33   40   240  0  152
+2   10.10.10.3              Tu0                      14 01:09:04   18   138  0  130
+1   10.10.10.5              Tu0                      11 01:09:04   13   138  0  147
+HQ2#
+HQ2#
+HQ2#show ip route 10.255.3.3
+Routing entry for 10.255.3.3/32
+  Known via "eigrp 10", distance 90, metric 30720640, type internal
+  Redistributing via eigrp 10
+  Last update from 10.10.10.3 on Tunnel0, 01:06:45 ago
+  Routing Descriptor Blocks:
+  * 10.10.10.3, from 10.10.10.3, 01:06:45 ago, via Tunnel0
+      Route metric is 30720640, traffic share count is 1
+      Total delay is 50002 microseconds, minimum bandwidth is 1000 Kbit
+      Reliability 255/255, minimum MTU 1476 bytes
+      Loading 1/255, Hops 1
+HQ2#
+HQ2#
+HQ2#show dmvpn
+Legend: Attrb --> S - Static, D - Dynamic, I - Incomplete
+        N - NATed, L - Local, X - No Socket
+        T1 - Route Installed, T2 - Nexthop-override
+        C - CTS Capable, I2 - Temporary
+        # Ent --> Number of NHRP entries with same NBMA peer
+        NHS Status: E --> Expecting Replies, R --> Responding, W --> Waiting
+        UpDn Time --> Up or Down Time for a Tunnel
+==========================================================================
 
+Interface: Tunnel0, IPv4 NHRP Details
+Type:Hub, NHRP Peers:3,
+
+ # Ent  Peer NBMA Addr Peer Tunnel Add State  UpDn Tm Attrb
+ ----- --------------- --------------- ----- -------- -----
+     1 192.0.2.3            10.10.10.3    UP 02:02:02     D
+     1 192.0.2.4            10.10.10.4    UP 02:02:02     D
+     1 192.0.2.5            10.10.10.5    UP 02:02:02     D
+
+HQ2#
+HQ2#
+HQ2#show ip nhrp
+10.10.10.3/32 via 10.10.10.3
+   Tunnel0 created 02:02:02, expire 00:07:27
+   Type: dynamic, Flags: registered nhop
+   NBMA address: 192.0.2.3
+10.10.10.4/32 via 10.10.10.4
+   Tunnel0 created 02:02:02, expire 00:07:19
+   Type: dynamic, Flags: registered nhop
+   NBMA address: 192.0.2.4
+10.10.10.5/32 via 10.10.10.5
+   Tunnel0 created 02:02:02, expire 00:07:25
+   Type: dynamic, Flags: registered nhop
+   NBMA address: 192.0.2.5
+HQ2#
+HQ2#
+HQ2#show run interface tunnel0
+Building configuration...
+
+Current configuration : 309 bytes
+!
+interface Tunnel0
+ description DMVPN-PH2-HUB
+ bandwidth 1000
+ ip address 10.10.10.2 255.255.255.0
+ no ip redirects
+ no ip next-hop-self eigrp 10
+ no ip split-horizon eigrp 10
+ ip nhrp authentication 12345
+ ip nhrp network-id 10
+ delay 5000
+ tunnel source GigabitEthernet0/0
+ tunnel mode gre multipoint
+end
+
+HQ2#

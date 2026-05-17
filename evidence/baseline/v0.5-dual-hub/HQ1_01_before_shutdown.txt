@@ -1,1 +1,107 @@
+HQ1#
+HQ1#show ip eigrp neighbors
+EIGRP-IPv4 VR(ENARSI) Address-Family Neighbors for AS(10)
+H   Address                 Interface              Hold Uptime   SRTT   RTO  Q  Seq
+                                                   (sec)         (ms)       Cnt Num
+2   10.10.10.5              Tu0                      10 00:04:53   12   100  0  144
+1   10.10.10.4              Tu0                      10 00:04:53   12   100  0  149
+0   10.10.10.3              Tu0                      10 00:04:53   12   100  0  126
+HQ1#
+HQ1#
+HQ1#show dmvpn
+Legend: Attrb --> S - Static, D - Dynamic, I - Incomplete
+        N - NATed, L - Local, X - No Socket
+        T1 - Route Installed, T2 - Nexthop-override
+        C - CTS Capable, I2 - Temporary
+        # Ent --> Number of NHRP entries with same NBMA peer
+        NHS Status: E --> Expecting Replies, R --> Responding, W --> Waiting
+        UpDn Time --> Up or Down Time for a Tunnel
+==========================================================================
 
+Interface: Tunnel0, IPv4 NHRP Details
+Type:Hub, NHRP Peers:3,
+
+ # Ent  Peer NBMA Addr Peer Tunnel Add State  UpDn Tm Attrb
+ ----- --------------- --------------- ----- -------- -----
+     1 192.0.2.3            10.10.10.3    UP 00:05:28     D
+     1 192.0.2.4            10.10.10.4    UP 00:05:15     D
+     1 192.0.2.5            10.10.10.5    UP 00:05:15     D
+
+HQ1#
+HQ1#
+HQ1#show ip nhrp
+10.10.10.3/32 via 10.10.10.3
+   Tunnel0 created 00:06:08, expire 00:09:20
+   Type: dynamic, Flags: registered nhop
+   NBMA address: 192.0.2.3
+10.10.10.4/32 via 10.10.10.4
+   Tunnel0 created 00:06:04, expire 00:09:12
+   Type: dynamic, Flags: registered nhop
+   NBMA address: 192.0.2.4
+10.10.10.5/32 via 10.10.10.5
+   Tunnel0 created 00:06:06, expire 00:09:17
+   Type: dynamic, Flags: registered nhop
+   NBMA address: 192.0.2.5
+HQ1#
+HQ1#
+HQ1#show run interface tunnel0
+Building configuration...
+
+Current configuration : 309 bytes
+!
+interface Tunnel0
+ description DMVPN-PH2-HUB
+ bandwidth 8000
+ ip address 10.10.10.1 255.255.255.0
+ no ip redirects
+ no ip next-hop-self eigrp 10
+ no ip split-horizon eigrp 10
+ ip nhrp authentication 12345
+ ip nhrp network-id 10
+ delay 1000
+ tunnel source GigabitEthernet0/0
+ tunnel mode gre multipoint
+end
+
+HQ1#
+HQ1#
+HQ1#show clock
+*12:16:06.561 UTC Sun May 17 2026
+HQ1#
+HQ1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+HQ1(config)#
+HQ1(config)#
+HQ1(config)#interface tunnel0
+HQ1(config-if)#
+HQ1(config-if)#shutdown
+HQ1(config-if)#
+*May 17 12:16:59.786: %DUAL-5-NBRCHANGE: EIGRP-IPv4 10: Neighbor 10.10.10.5 (Tunnel0) is down: interface down
+*May 17 12:16:59.786: %DUAL-5-NBRCHANGE: EIGRP-IPv4 10: Neighbor 10.10.10.4 (Tunnel0) is down: interface down
+*May 17 12:16:59.786: %DUAL-5-NBRCHANGE: EIGRP-IPv4 10: Neighbor 10.10.10.3 (Tunnel0) is down: interface down
+HQ1(config-if)#
+HQ1(config-if)#
+HQ1(config-if)#
+*May 17 12:17:01.783: %LINEPROTO-5-UPDOWN: Line protocol on Interface Tunnel0, changed state to down
+*May 17 12:17:01.784: %LINK-5-CHANGED: Interface Tunnel0, changed state to administratively down
+HQ1(config-if)#
+HQ1(config-if)#
+
+HQ1#
+HQ1#show ip eigrp neighbors
+EIGRP-IPv4 VR(ENARSI) Address-Family Neighbors for AS(10)
+HQ1#
+HQ1#show dmvpn
+Legend: Attrb --> S - Static, D - Dynamic, I - Incomplete
+        N - NATed, L - Local, X - No Socket
+        T1 - Route Installed, T2 - Nexthop-override
+        C - CTS Capable, I2 - Temporary
+        # Ent --> Number of NHRP entries with same NBMA peer
+        NHS Status: E --> Expecting Replies, R --> Responding, W --> Waiting
+        UpDn Time --> Up or Down Time for a Tunnel
+==========================================================================
+
+HQ1#
+HQ1#
+HQ1#show ip nhrp
+HQ1#

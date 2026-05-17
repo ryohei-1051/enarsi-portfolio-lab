@@ -1,0 +1,26 @@
+DC1#
+DC1#show ip eigrp neighbors
+EIGRP-IPv4 VR(ENARSI) Address-Family Neighbors for AS(10)
+H   Address                 Interface              Hold Uptime   SRTT   RTO  Q  Seq
+                                                   (sec)         (ms)       Cnt Num
+0   10.10.10.2              Tu0                      12 01:09:36    1  1470  0  110
+DC1#
+DC1#
+DC1#show ip route eigrp
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override, p - overrides from PfR
+
+Gateway of last resort is not set
+
+      10.0.0.0/8 is variably subnetted, 6 subnets, 2 masks
+D        10.255.2.2/32 [90/76800640] via 10.10.10.2, 01:09:42, Tunnel0
+D        10.255.4.4/32 [90/102400640] via 10.10.10.4, 00:04:21, Tunnel0
+D        10.255.5.5/32 [90/102400640] via 10.10.10.5, 00:04:21, Tunnel0
+DC1#
