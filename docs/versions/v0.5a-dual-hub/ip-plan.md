@@ -68,7 +68,7 @@ Network: `10.10.10.0/24`
 |---|---:|---:|
 | DMVPN Phase | Phase 2 | Phase 2 |
 | NHRP network-id | 10 |　10 |
-| NHRP authentication key | 12345｜　10 |
+| NHRP authentication key | 12345　｜　12345　|
 | Hub tunnel IP | 10.10.10.1 | 10.10.10.2 |
 | Hub NBMA IP | 192.0.2.1 | 192.0.2.2 |
 
