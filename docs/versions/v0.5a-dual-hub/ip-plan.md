@@ -1,4 +1,4 @@
-# IP Plan (Snapshot) — v0.5-dual-hub
+# IP Plan (Snapshot) — v0.5a-dual-hub
 
 This snapshot reflects baseline v0.4 (eBGP + inbound filtering + selective redistribution into EIGRP).
 
