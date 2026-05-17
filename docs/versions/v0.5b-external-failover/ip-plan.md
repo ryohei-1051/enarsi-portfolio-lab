@@ -71,16 +71,17 @@ Network: `10.10.10.0/24`
 
 ---
 
-## 5) DMVPN Parameters
-| Item | Value |
-|---|---|
-| DMVPN Phase | Phase 2 |
-| NHRP network-id | 10 |
-| NHRP authentication key | 12345 |
-| Hub tunnel IP | 10.10.10.1 |
-| Hub tunnel IP | 10.10.10.2 |
-| Hub NBMA IP | 192.0.2.1 |
-| Hub NBMA IP | 192.0.2.2 |
+## 5) DMVPN Parameters (Hub comparison)
+| Item | HQ1 | HQ2 |
+|---|---:|---:|
+| DMVPN Phase | Phase 2 | Phase 2 |
+| NHRP network-id | 10 |　10 |
+| NHRP authentication key | 12345 |　12345 |
+| Hub tunnel IP | 10.10.10.1 | 10.10.10.2 |
+| Hub NBMA IP | 192.0.2.1 | 192.0.2.2 |
+
+Overlay subnet：` 10.10.10.0/24` 
+NBMA subnet：` 192.0.2.0/24` 
 
 ---
 
