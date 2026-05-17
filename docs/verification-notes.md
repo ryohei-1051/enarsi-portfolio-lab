@@ -77,8 +77,8 @@ This file logs each baseline milestone (v0.x) with what was validated and where 
   - EIGRP neighbors established to HQ1 and HQ2 over Tunnel0
   - Failover test: HQ1 Tunnel0 shutdown → reachability restored with HQ2 as the control-plane path
   - DMVPN Phase 2 shortcut formed for data-plane (direct spoke-to-spoke forwarding after NHRP resolution)
-- Evidence: `evidence/baseline/v0.5-dual-hub/`
-- Configs: `configs/baseline/v0.5-dual-hub/`
+- Evidence: `evidence/baseline/v0.5a-dual-hub/`
+- Configs: `configs/baseline/v0.5a-dual-hub/`
 - Key checks:
   - `show ip eigrp neighbors` (HQ1 down, HQ2 remains)
   - `show ip route <remote loopback>` (route sourced via HQ2)
