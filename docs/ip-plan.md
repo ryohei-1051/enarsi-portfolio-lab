@@ -9,57 +9,63 @@ Loopbacks are /32 and used for routing validation (v0.2+).
 
 ---
 
-## 1) Underlay (NBMA / Outside) — Shared Ethernet Segment
+## 1) Underlay (NBMA / DMVPN Outside) — Shared Ethernet Segment
 
 | Device | Role | Outside IF | IPv4 Address | Prefix | Notes |
 |---|---|---|---:|---:|---|
 | HQ1 | Hub | Gi0/0 | 192.0.2.1 | /24 | DMVPN NBMA (Hub) |
+| HQ2 | Hub | Gi0/0 | 192.0.2.2 | /24 | DMVPN NBMA (Hub) |
 | DC1 | Spoke | Gi0/0 | 192.0.2.3 | /24 | DMVPN NBMA (Spoke) |
 | BR1 | Spoke | Gi0/0 | 192.0.2.4 | /24 | DMVPN NBMA (Spoke) |
 | BR2 | Spoke | Gi0/0 | 192.0.2.5 | /24 | DMVPN NBMA (Spoke) |
-| ISP | Optional | Gi0/0 | 192.0.2.2 | /24 | Reserved for later (e.g., external routing) |
 
 Network: `192.0.2.0/24` (documentation prefix)
 
 ---
 
-## 2) Overlay (DMVPN Tunnel0)
+## 2) HQ1–ISP Link (BGP Transport)
 
-| Device | Role | Tunnel IF | Tunnel IPv4 | Prefix | Notes |
-|---|---|---|---:|---:|---|
-| HQ1 | Hub | Tunnel0 | 10.10.10.1 | /24 | Hub tunnel IP |
-| DC1 | Spoke | Tunnel0 | 10.10.10.3 | /24 | Spoke tunnel IP |
-| BR1 | Spoke | Tunnel0 | 10.10.10.4 | /24 | Spoke tunnel IP |
-| BR2 | Spoke | Tunnel0 | 10.10.10.5 | /24 | Spoke tunnel IP |
+| Device | IF | IPv4 Address | Prefix | Notes |
+|---|---|---:|---:|---|
+| HQ1 | Gi0/1 | 192.0.1.1 | /24 | eBGP neighbor transport |
+| ISP | Gi0/1 | 192.0.1.2 | /24 | eBGP neighbor transport |
+
+Network: `192.0.1.0/24`
+
+---
+
+## 3) Overlay (DMVPN Tunnel0)
+
+| Device | Role | Tunnel IF | Tunnel IPv4 | Prefix |
+|---|---|---|---:|---:|
+| HQ1 | Hub | Tunnel0 | 10.10.10.1 | /24 |
+| HQ2 | Hub | Tunnel0 | 10.10.10.2 | /24 |
+| DC1 | Spoke | Tunnel0 | 10.10.10.3 | /24 |
+| BR1 | Spoke | Tunnel0 | 10.10.10.4 | /24 |
+| BR2 | Spoke | Tunnel0 | 10.10.10.5 | /24 |
 
 Network: `10.10.10.0/24`
 
 ---
 
-## 3) DMVPN Parameters (Baseline v0.1)
-
-| Item | Value |
-|---|---|
-| DMVPN Phase | Phase 2 |
-| Tunnel mode | GRE multipoint (mGRE) |
-| NHRP network-id | 10 |
-| NHRP authentication key | 12345 |
-| NHS (Hub tunnel IP) | 10.10.10.1 |
-| Hub NBMA (underlay IP) | 192.0.2.1 |
-| Underlay design | Shared Ethernet segment (single L2) |
-
----
-
-## 4) Loopbacks (Validation Prefixes) — v0.2+
+## 4) Loopbacks
 
 Loopbacks are used to validate routing reachability and will be advertised via dynamic routing in later baselines (v0.2+).
 
+### Internal validation loopbacks (v0.2+)
+| Device | Loopback IF | IPv4 Address | Prefix |
+|---|---|---:|---:|
+| HQ1 | Lo0 | 10.255.1.1 | /32 |
+| HQ2 | Lo0 | 10.255.2.2 | /32 |
+| DC1 | Lo0 | 10.255.3.3 | /32 |
+| BR1 | Lo0 | 10.255.4.4 | /32 |
+| BR2 | Lo0 | 10.255.5.5 | /32 |
+
+### External prefixes (ISP)
 | Device | Loopback IF | IPv4 Address | Prefix | Notes |
 |---|---|---:|---:|---|
-| HQ1 | Lo0 | 10.255.1.1 | /32 | Router-ID candidate |
-| DC1 | Lo0 | 10.255.3.3 | /32 | Test destination |
-| BR1 | Lo0 | 10.255.4.4 | /32 | Test destination |
-| BR2 | Lo0 | 10.255.5.5 | /32 | Test destination |
+| ISP | Lo0 | 203.0.113.1 | /32 | Allowed prefix |
+| ISP | Lo1 | 198.51.100.1 | /32 | Blocked prefix |
 
 ---
 
@@ -69,3 +75,6 @@ Loopbacks are used to validate routing reachability and will be advertised via d
 - Versioning:
   - `v0.1-dmvpn` : DMVPN connectivity (NHRP registration + tunnel reachability)
   - `v0.2-ospf`  : OSPF over DMVPN (neighbors FULL + route exchange)
+  - `v0.3-eigrp`  : EIGRP over DMVPN (neighbors FULL + route exchange)
+  - `v0.4-bgp`  : BGP and EIGRP over DMVPN (neighbors FULL + route exchange)
+  - `v0.5-dual-hub`  : OSPF over DMVPN (neighbors FULL + route exchange)
