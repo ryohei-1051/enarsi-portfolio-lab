@@ -102,3 +102,5 @@ NBMA subnet：` 192.0.2.0/24`
 ### ISP return paths (for ping reply)
 - `10.10.10.0/24` → next-hop `192.0.3.1` (HQ2)
 - `10.255.0.0/16` → next-hop `192.0.3.1` (HQ2)
+
+Note: ISP return paths are intentionally pinned to HQ2 to guarantee external reachability during HQ1 shutdown; this may introduce asymmetric routing in steady state.
