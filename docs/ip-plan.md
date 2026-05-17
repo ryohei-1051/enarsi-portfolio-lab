@@ -32,7 +32,7 @@ Network: `192.0.2.0/24` (documentation prefix)
 | HQ2 | Gi0/1 | 192.0.3.1 | /24 | eBGP neighbor transport |
 | ISP | Gi0/1 | 192.0.3.2 | /24 | eBGP neighbor transport |
 
-Network: `192.0.1.0/24`
+Network: `192.0.1.0/24`(HQ1–ISP)`192.0.3.0/24`(HQ2–ISP)
 
 ---
 
