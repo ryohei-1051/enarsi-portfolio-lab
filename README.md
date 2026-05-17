@@ -1,6 +1,6 @@
 # ENARSI Portfolio Lab: DMVPN Routing & Troubleshooting (GNS3)
 
-# Status: Week 1 skeleton complete | Baseline v0.1 (DMVPN Phase 2) complete | Baseline v0.2 (OSPF over DMVPN) complete | Baseline v0.3 (EIGRP over DMVPN) complete
+# Status: Week 1 skeleton complete | v0.1-dmvpn complete | v0.2-ospf complete | v0.3-eigrp complete | v0.4-bgp complete | v0.5-dual-hub complete | Next: v0.5b (BGP on HQ2) / v0.6 (SLA/track + convergence tuning)
 
 This repository is a networking portfolio built around **CCNP ENARSI-level routing & troubleshooting**.  
 I use **GNS3 (primary)** and **Packet Tracer (supporting)** to build a reproducible **DMVPN Phase 2** lab and validate dynamic routing over the overlay (**OSPF in v0.2**; more to come).
@@ -23,7 +23,10 @@ I use **GNS3 (primary)** and **Packet Tracer (supporting)** to build a reproduci
 | Baseline | Goal | Configs | Evidence |
 |---|---|---|---|
 | v0.1-dmvpn | DMVPN Phase 2 up; NHRP registration; tunnel reachability | `configs/baseline/v0.1-dmvpn/` | `evidence/baseline/v0.1-dmvpn/` |
-| v0.2-ospf | OSPF neighbors FULL over Tunnel0; loopbacks exchanged; reachability verified | `configs/baseline/v0.2-ospf/` | `evidence/baseline/v0.2-ospf/` |
+| v0.2-ospf | OSPF neighbors FULL over Tunnel0; loopbacks exchanged | `configs/baseline/v0.2-ospf/` | `evidence/baseline/v0.2-ospf/` |
+| v0.3-eigrp | EIGRP neighbors up; loopbacks exchanged; spoke-to-spoke reachability | `configs/baseline/v0.3-eigrp/` | `evidence/baseline/v0.3-eigrp/` |
+| v0.4-bgp | eBGP + inbound filter; selective redistribution into EIGRP | `configs/baseline/v0.4-bgp/` | `evidence/baseline/v0.4-bgp/` |
+| v0.5-dual-hub | Dual hub failover; HQ1 down → HQ2 control-plane; Phase 2 shortcut | `configs/baseline/v0.5-dual-hub/` | `evidence/baseline/v0.5-dual-hub/` |
 
 ### Quick links
 - Start here (design): [docs/routing-design.md](docs/routing-design.md)
@@ -119,10 +122,10 @@ I use **GNS3 (primary)** and **Packet Tracer (supporting)** to build a reproduci
 ---
 
 ## 8) Roadmap (Next Enhancements)
-- v0.3: **EIGRP over DMVPN** (compare OSPF vs EIGRP behavior)
-- Add BGP (eBGP/iBGP), redistribution, and policy control
-- Add dual-hub / failover (Hub2 enablement), timers, and convergence tests
-- (Optional) Monitoring/logging view (SIEM-style)
+- v0.5b: External reachability failover (BGP on HQ2) + validation
+- v0.6: Convergence tuning (IP SLA/track, timers) + before/after comparison
+- INC expansion: EIGRP neighbor issues, BGP policy mistakes, redistribution loops
+- (Optional) Monitoring/logging view (syslog/SIEM-style)
 
 ---
 
