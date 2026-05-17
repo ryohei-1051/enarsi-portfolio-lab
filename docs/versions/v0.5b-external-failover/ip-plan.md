@@ -1,6 +1,6 @@
 # IP Plan (Snapshot) — v0.5b-external-failover
 
-This snapshot reflects baseline v0.5 (eBGP + inbound filtering + selective redistribution into EIGRP).
+This snapshot reflects baseline v0.5b (External reachability failover: eBGP on HQ2 + inbound filtering + selective redistribution into EIGRP).
 
 ---
 
@@ -84,19 +84,20 @@ Network: `10.10.10.0/24`
 
 ---
 
-## 6) Routing Parameters (v0.4)
+## 6) Routing Parameters (v0.5b)
 ### eBGP
 | Item | Value |
 |---|---|
 | HQ1 AS | 65001 |
+| HQ2 AS | 65001 |
 | ISP AS | 65002 |
-| eBGP neighbors | HQ1(192.0.1.1) ↔ ISP(192.0.1.2) |
-| Policy | inbound filter on HQ1 (accept 203.0.113.1/32 only) |
+| HQ1–ISP neighbor | HQ1(192.0.1.1) ↔ ISP(192.0.1.2) |
+| HQ2–ISP neighbor | HQ2(192.0.3.1) ↔ ISP(192.0.3.2) |
+| Policy | inbound filter on HQ1/HQ2 (accept 203.0.113.1/32 only) |
 
 ### EIGRP redistribution
-- HQ1 redistributes allowed BGP prefix into EIGRP using `route-map BGP-TO-EIGRP` with explicit metric.
+- HQ1 and HQ2 redistribute the allowed BGP prefix into EIGRP using `route-map BGP-TO-EIGRP` with explicit metric.
 
 ### ISP return paths (for ping reply)
-- `10.10.10.0/24` → next-hop `192.0.1.1`
-- `10.255.0.0/16` → next-hop `192.0.1.1`
-
+- `10.10.10.0/24` → next-hop `192.0.3.1` (HQ2)
+- `10.255.0.0/16` → next-hop `192.0.3.1` (HQ2)
