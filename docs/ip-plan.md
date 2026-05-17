@@ -75,6 +75,6 @@ Loopbacks are used to validate routing reachability and will be advertised via d
 - Versioning:
   - `v0.1-dmvpn` : DMVPN connectivity (NHRP registration + tunnel reachability)
   - `v0.2-ospf`  : OSPF over DMVPN (neighbors FULL + route exchange)
-  - `v0.3-eigrp`  : EIGRP over DMVPN (neighbors FULL + route exchange)
+  - `v0.3-eigrp`  : EIGRP over DMVPN (neighbors established + route exchange)
   - `v0.4-bgp`  : eBGP + inbound filter + selective redistribution into EIGRP
   - `v0.5-dual-hub`  : Dual Hub + failover over DMVPN Phase 2
