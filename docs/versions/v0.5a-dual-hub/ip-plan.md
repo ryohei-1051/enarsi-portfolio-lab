@@ -22,10 +22,10 @@ Network: `192.0.2.0/24` (documentation prefix)
 
 | Device | IF | IPv4 Address | Prefix | Notes |
 |---|---|---:|---:|---|
-| HQ1 | Gi0/1 | 192.0.1.1 | /24 | eBGP neighbor transport |
-| ISP | Gi0/1 | 192.0.1.2 | /24 | eBGP neighbor transport |
+| HQ1 | Gi0/1 | 192.0.1.1 | /30 | eBGP neighbor transport |
+| ISP | Gi0/1 | 192.0.1.2 | /30 | eBGP neighbor transport |
 
-Network: `192.0.1.0/24`
+Network: `192.0.1.0/30`
 
 ---
 
