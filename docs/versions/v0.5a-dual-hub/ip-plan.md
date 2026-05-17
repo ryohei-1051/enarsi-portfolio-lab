@@ -76,14 +76,17 @@ Network: `10.10.10.0/24`
 
 ---
 
-## 6) Routing Parameters (v0.4)
-### eBGP
-| Item | Value |
-|---|---|
-| HQ1 AS | 65001 |
-| ISP AS | 65002 |
-| eBGP neighbors | HQ1(192.0.1.1) ↔ ISP(192.0.1.2) |
-| Policy | inbound filter on HQ1 (accept 203.0.113.1/32 only) |
+## 6) Routing Parameters (v0.5a)
+### EIGRP (Dual Hub)
+- EIGRP AS: 10
+- Hubs: HQ1 (10.10.10.1) + HQ2 (10.10.10.2)
+- Hub behavior: `no split-horizon` and `no next-hop-self` on Tunnel0 (both hubs)
+- Preference: HQ1 preferred (bandwidth/delay tuning); failover validated by shutting HQ1 Tunnel0
+
+### eBGP (existing from v0.4; not the focus of v0.5a)
+- HQ1 AS: 65001
+- ISP AS: 65002
+- eBGP neighbors: HQ1(192.0.1.1) ↔ ISP(192.0.1.2)
 
 ### EIGRP redistribution
 - HQ1 redistributes allowed BGP prefix into EIGRP using `route-map BGP-TO-EIGRP` with explicit metric.
