@@ -2,7 +2,7 @@
 
 ## Change ID
 - ID: (e.g., CHG-2026-05-17-01)
-- Baseline target: (e.g., v0.5-dual-hub)
+- Baseline target: (e.g., v0.5a-dual-hub)
 - Author: (name)
 - Date/Time: (YYYY-MM-DD HH:MM)
 
