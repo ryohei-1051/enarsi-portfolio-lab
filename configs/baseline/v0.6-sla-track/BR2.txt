@@ -1,13 +1,13 @@
 Building configuration...
 
-Current configuration : 3668 bytes
+Current configuration : 3948 bytes
 !
 version 15.9
 service timestamps debug datetime msec
 service timestamps log datetime msec
 no service password-encryption
 !
-hostname ISP
+hostname BR2
 !
 boot-start-marker
 boot-end-marker
@@ -63,27 +63,40 @@ ip tcp synwait-time 5
 !
 !
 interface Loopback0
- ip address 203.0.113.1 255.255.255.255
+ ip address 10.255.5.5 255.255.255.255
 !
-interface Loopback1
- ip address 198.51.100.1 255.255.255.255
+interface Tunnel0
+ description DMVPN-PH2-SPOKE
+ ip address 10.10.10.5 255.255.255.0
+ no ip redirects
+ ip nhrp authentication 12345
+ ip nhrp map 10.10.10.1 192.0.2.1
+ ip nhrp map multicast 192.0.2.1
+ ip nhrp map 10.10.10.2 192.0.2.2
+ ip nhrp map multicast 192.0.2.2
+ ip nhrp network-id 10
+ ip nhrp nhs 10.10.10.1
+ ip nhrp nhs 10.10.10.2
+ tunnel source GigabitEthernet0/0
+ tunnel mode gre multipoint
 !
 interface GigabitEthernet0/0
- no ip address
+ description OUTSIDE-NBMA
+ ip address 192.0.2.5 255.255.255.0
  duplex auto
  speed auto
  media-type rj45
 !
 interface GigabitEthernet0/1
- description BGP-TRANSIT-to-HQ1
- ip address 192.0.1.2 255.255.255.252
+ no ip address
+ shutdown
  duplex auto
  speed auto
  media-type rj45
 !
 interface GigabitEthernet0/2
- description BGP-TRANSIT-to-HQ2
- ip address 192.0.3.2 255.255.255.252
+ no ip address
+ shutdown
  duplex auto
  speed auto
  media-type rj45
@@ -95,22 +108,31 @@ interface GigabitEthernet0/3
  speed auto
  media-type rj45
 !
-router bgp 65002
- bgp log-neighbor-changes
- network 198.51.100.1 mask 255.255.255.255
- network 203.0.113.1 mask 255.255.255.255
- neighbor 192.0.1.1 remote-as 65001
- neighbor 192.0.3.1 remote-as 65001
+!
+router eigrp ENARSI
+ !
+ address-family ipv4 unicast autonomous-system 10
+  !
+  af-interface default
+   passive-interface
+  exit-af-interface
+  !
+  af-interface Tunnel0
+   no passive-interface
+  exit-af-interface
+  !
+  topology base
+  exit-af-topology
+  network 10.10.10.0 0.0.0.255
+  network 10.255.5.5 0.0.0.0
+  eigrp router-id 10.255.5.5
+ exit-address-family
 !
 ip forward-protocol nd
 !
 !
 no ip http server
 no ip http secure-server
-ip route 10.10.10.0 255.255.255.0 192.0.3.1
-ip route 10.10.10.0 255.255.255.0 192.0.1.1 5
-ip route 10.255.0.0 255.255.0.0 192.0.3.1
-ip route 10.255.0.0 255.255.0.0 192.0.1.1 5
 !
 ipv6 ioam timestamp
 !
