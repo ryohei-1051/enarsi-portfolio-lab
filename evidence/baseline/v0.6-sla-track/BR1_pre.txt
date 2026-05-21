@@ -1,1 +1,43 @@
+BR1#
+BR1#show ip sla statistics 10
+IPSLAs Latest Operation Statistics
+
+IPSLA operation id: 10
+        Latest RTT: 2 milliseconds
+Latest operation start time: 01:16:27 UTC Thu May 21 2026
+Latest operation return code: OK
+Number of successes: 13
+Number of failures: 7
+Operation time to live: Forever
+
+
+BR1#
+BR1#
+BR1#show track 10
+Track 10
+  IP SLA 10 reachability
+  Reachability is Up
+    4 changes, last change 00:06:49
+  Latest operation return code: OK
+  Latest RTT (millisecs) 2
+  Tracked by:
+    Static IP Routing 0
+BR1#
+BR1#
+BR1#show ip route 0.0.0.0
+Routing entry for 0.0.0.0/0, supernet
+  Known via "static", distance 1, metric 0, candidate default path
+  Routing Descriptor Blocks:
+  * 10.10.10.1
+      Route metric is 0, traffic share count is 1
+BR1#
+BR1#
+BR1#traceroute 9.9.9.9
+Type escape sequence to abort.
+Tracing the route to 9.9.9.9
+VRF info: (vrf in name/id, vrf out name/id)
+  1 10.10.10.1 4 msec 3 msec 3 msec
+  2 10.10.10.1 !H  !H  !H
+BR1#
+BR1#
 
