@@ -10,7 +10,7 @@ I use **GNS3 (primary)** and **Packet Tracer (supporting)** to build a reproduci
 ## 0) TL;DR (One-minute overview)
 
 **What you’ll find here**
-- A reproducible **DMVPN Phase 2** hub-and-spoke lab (HQ1 hub + DC1/BR1/BR2 spokes)
+- A reproducible **DMVPN Phase 2** lab that evolves from single-hub to **dual-hub failover** (HQ1 + HQ2)
 - Baseline milestones with **versioned configs + evidence** (show outputs / ping / traceroute)
 - A growing set of **incident runbooks** (failure scenarios) with a consistent format:  
   **Symptom → Investigation (commands + evidence) → Root cause → Fix → Verification → Prevention**
@@ -43,8 +43,8 @@ I use **GNS3 (primary)** and **Packet Tracer (supporting)** to build a reproduci
 
 ## 1) Learning Goals (ENARSI Mapping)
 - **DMVPN foundation:** mGRE + NHRP (Phase 2), repeatable overlay operations
-- **Routing protocols:** OSPF (current) / BGP (planned)
-- **Path control:** route-map / prefix-list / community / local-preference / MED (planned)
+- **Routing protocols:** OSPF (v0.2) / EIGRP (v0.3+) / BGP (v0.4+)
+- **Path control:** prefix-list / route-map (implemented in v0.4+; expand in future)
 - **Troubleshooting:** disciplined use of show/debug, documented workflows with evidence
 - **Operations:** change plan / rollback / verification
 
@@ -55,7 +55,7 @@ I use **GNS3 (primary)** and **Packet Tracer (supporting)** to build a reproduci
 ### 2.1 Topology
 - Diagram: `docs/topology.png`
 - Roles:
-  - **HQ1** (Hub)
+  - **HQ1 / HQ2** (Hub)
   - **DC1 / BR1 / BR2** (Spokes)
   - **ISP** ISP (used from v0.4+)
 
