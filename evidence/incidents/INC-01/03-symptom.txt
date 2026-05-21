@@ -1,1 +1,9 @@
+HQ1
+show ip ospf neighbor
+show ip route ospf | include 10.255.
+show logging | include OSPF|MTU|MISMATCH|AUTH
 
+BR1
+show ip ospf neighbor
+show ip route ospf | include 10.255.
+show logging | include OSPF|MTU|MISMATCH|AUTH
