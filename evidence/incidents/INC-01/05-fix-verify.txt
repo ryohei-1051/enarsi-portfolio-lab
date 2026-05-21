@@ -1,1 +1,11 @@
+HQ1
+show run interface tunnel0 | include mtu|ospf
+show ip ospf neighbor
+show ip route ospf | include 10.255.
+ping 10.255.1.1 source lo0
 
+BR1
+show run interface tunnel0 | include mtu|ospf
+show ip ospf neighbor
+show ip route ospf | include 10.255.
+ping 10.255.1.1 source lo0
