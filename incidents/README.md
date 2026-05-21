@@ -5,9 +5,10 @@ Each incident follows this format:
 
 ---
 
-## INC-01: OSPF adjacency not FULL (MTU / area mismatch / auth)
-- **Symptom:** Neighbor stuck in EXSTART/EXCHANGE or flaps (DOWN/INIT)
-- **Goal:** Differentiate MTU mismatch vs area mismatch vs authentication issues
+## [INC-01: OSPF adjacency not FULL (MTU mismatch)](INC-01-ospf-adjacency-not-full/README.md)
+- **Symptom:** Neighbor stuck in EXSTART/EXCHANGE
+- **Goal:** Identify MTU mismatch quickly and recover safely
+- *(Optional future variants: area mismatch / auth mismatch)*
 
 ## INC-02: Specific prefixes missing (LSA filtering / summarization / distribute-list)
 - **Symptom:** Only some routes are missing while others are fine
