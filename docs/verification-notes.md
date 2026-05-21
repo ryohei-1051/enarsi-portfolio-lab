@@ -114,6 +114,5 @@ This file logs each baseline milestone (v0.x) with what was validated and where 
 - Key checks:
   - `show ip sla statistics 10`, `show track 10`
   - `show ip route 0.0.0.0` (next-hop changes HQ1 → HQ2 → HQ1)
-  - `ping/traceroute 203.0.113.1` (reachability during failover)
 - Notes:
   - Convergence timing is treated as an indicator only (GNS3 variability); validation focuses on deterministic control logic.
