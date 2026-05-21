@@ -57,7 +57,7 @@ I use **GNS3 (primary)** and **Packet Tracer (supporting)** to build a reproduci
 - Roles:
   - **HQ1** (Hub)
   - **DC1 / BR1 / BR2** (Spokes)
-  - **ISP** (Optional / future)
+  - **ISP** ISP (used from v0.4+)
 
 ### 2.2 IP Plan
 - Addressing table: `docs/ip-plan.md`
