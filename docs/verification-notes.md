@@ -102,3 +102,18 @@ This file logs each baseline milestone (v0.x) with what was validated and where 
 - Convergence (indicator only):
   - Timing may vary in GNS3; validation focuses on policy correctness + reachability during failover.
 - Next: repository review + (optional) SLA/track and convergence tuning
+
+## v0.6-sla-track (IP SLA + track based failover control on BR1)
+- Result:
+  - BR1 monitors HQ1 reachability using IP SLA (1s frequency) and track
+  - Primary default route via HQ1 is installed only when track is up
+  - When HQ1 becomes unreachable, BR1 fails over to backup default via HQ2 automatically
+  - Upon recovery, BR1 returns to the primary path
+- Evidence: `evidence/baseline/v0.6-sla-track/`
+- Configs: `configs/baseline/v0.6-sla-track/`
+- Key checks:
+  - `show ip sla statistics 10`, `show track 10`
+  - `show ip route 0.0.0.0` (next-hop changes HQ1 → HQ2 → HQ1)
+  - `ping/traceroute 203.0.113.1` (reachability during failover)
+- Notes:
+  - Convergence timing is treated as an indicator only (GNS3 variability); validation focuses on deterministic control logic.
