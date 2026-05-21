@@ -1,1 +1,4 @@
-
+show ip ospf neighbor
+show ip ospf interface tunnel0 | include MTU|Area|Hello|Dead|Network Type|Authentication
+show ip route ospf | include 10.255.（loopback経路が戻っている証明：絞ってOK）
+ping 10.255.1.1 source lo0
