@@ -1,1 +1,24 @@
-
+BR1#
+BR1#
+*May 21 01:18:31.681: %DUAL-5-NBRCHANGE: EIGRP-IPv4 10: Neighbor 10.10.10.1 (Tunnel0) is down: holding time expired
+BR1#
+*May 21 01:18:35.627: %TRACK-6-STATE: 10 ip sla 10 reachability Up -> Down
+BR1#
+BR1#show track 10
+Track 10
+  IP SLA 10 reachability
+  Reachability is Down
+    5 changes, last change 00:00:08
+  Latest operation return code: Timeout
+  Tracked by:
+    Static IP Routing 0
+BR1#
+BR1#
+BR1#show ip route 0.0.0.0
+Routing entry for 0.0.0.0/0, supernet
+  Known via "static", distance 250, metric 0, candidate default path
+  Routing Descriptor Blocks:
+  * 10.10.10.2
+      Route metric is 0, traffic share count is 1
+BR1#
+BR1#
