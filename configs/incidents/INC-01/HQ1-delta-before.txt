@@ -1,1 +1,18 @@
+# INC-01 - HQ1 delta (BEFORE)
+# Baseline: v0.2-ospf
+# Device: HQ1
+# Scope: tunnel0 + OSPF only (delta capture)
+# Timestamp: YYYY-MM-DD HH:MM (optional)
 
+## show run interface tunnel0
+<PASTE OUTPUT HERE>
+
+## show run | section router ospf
+<PASTE OUTPUT HERE>
+
+## (Optional) show run | include ^ip mtu|ip ospf mtu-ignore
+<PASTE OUTPUT HERE>
+
+## Notes (before injection)
+- Expected neighbor: FULL with BR1
+- Expected MTU behavior: match on both ends
