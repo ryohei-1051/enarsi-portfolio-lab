@@ -1,1 +1,17 @@
+# INC-01 - BR1 delta (AFTER)
+# Baseline: v0.2-ospf
+# Device: BR1
+# Scope: tunnel0 + OSPF only (delta capture)
+# Timestamp: YYYY-MM-DD HH:MM (optional)
 
+## show run interface tunnel0
+<PASTE OUTPUT HERE>
+
+## show run | section router ospf
+<PASTE OUTPUT HERE>
+
+## (Optional) show run | include ^ip mtu|ip ospf mtu-ignore
+<PASTE OUTPUT HERE>
+
+## Notes (after fix)
+- Neighbor should return to FULL
