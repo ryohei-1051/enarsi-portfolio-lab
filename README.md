@@ -1,6 +1,6 @@
 # ENARSI Portfolio Lab: DMVPN Routing & Troubleshooting (GNS3)
 
-# Status: Week 1 skeleton complete | v0.1-dmvpn complete | v0.2-ospf complete | v0.3-eigrp complete | v0.4-bgp complete | v0.5a-dual-hub complete | v0.5b (BGP on HQ2) complete | v0.6-SLA/track complete | Next: INC expansion / v0.7 (convergence tuning)
+# Status: Week 1 skeleton complete | v0.1-dmvpn complete | v0.2-ospf complete | v0.3-eigrp complete | v0.4-bgp complete | v0.5a-dual-hub complete | v0.5b-external-failover complete | v0.6-SLA/track complete | Next: INC expansion / v0.7 (convergence tuning)
 
 This repository is a networking portfolio built around **CCNP ENARSI-level routing & troubleshooting**.  
 I use **GNS3 (primary)** and **Packet Tracer (supporting)** to build a reproducible **DMVPN Phase 2** lab and validate dynamic routing over the overlay (**OSPF in v0.2**; more to come).
@@ -28,6 +28,7 @@ I use **GNS3 (primary)** and **Packet Tracer (supporting)** to build a reproduci
 | v0.4-bgp | eBGP + inbound filter; selective redistribution into EIGRP | `configs/baseline/v0.4-bgp/` | `evidence/baseline/v0.4-bgp/` |
 | v0.5a-dual-hub | Dual hub failover; HQ1 down → HQ2 control-plane; Phase 2 shortcut | `configs/baseline/v0.5a-dual-hub/` | `evidence/baseline/v0.5a-dual-hub/` |
 | v0.5b-external-failover | BGP on HQ2 + external reachability failover; Phase 2 shortcut | `configs/baseline/v0.5b-external-failover/` | `evidence/baseline/v0.5b-external-failover/` |
+| v0.6-sla-track | BR1 IP SLA + track controls default-route failover (HQ1 → HQ2 → HQ1) | `configs/baseline/v0.6-sla-track/` | `evidence/baseline/v0.6-sla-track/` |
 
 ### Quick links
 - Start here (design): [docs/routing-design.md](docs/routing-design.md)
@@ -123,10 +124,10 @@ I use **GNS3 (primary)** and **Packet Tracer (supporting)** to build a reproduci
 ---
 
 ## 8) Roadmap (Next Enhancements)
-- v0.5b: External reachability failover (BGP on HQ2) + validation
-- v0.6: Convergence tuning (IP SLA/track, timers) + before/after comparison
-- INC expansion: EIGRP neighbor issues, BGP policy mistakes, redistribution loops
-- (Optional) Monitoring/logging view (syslog/SIEM-style)
+- INC-01: finish end-to-end runbook + evidence (OSPF adjacency not FULL)
+- Add 3–5 more ENARSI-style incidents (EIGRP neighbor issues, BGP policy mistakes, redistribution loops)
+- v0.7: convergence tuning (track delay down/up, timers) + before/after comparison (indicator only)
+- (Optional) monitoring/logging view (syslog/SIEM-style)
 
 ---
 
