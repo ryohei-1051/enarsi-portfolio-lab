@@ -59,3 +59,10 @@ conf t
 interface tunnel0
  ip mtu 1400
 end
+```
+
+(Optional) Reset adjacency quickly:
+- `clear ip ospf process`
+Evidence to capture (save as `02-fault-injection.txt`)
+- HQ1: `show run interface tunnel0`
+- HQ1: `show ip ospf interface tunnel0`
