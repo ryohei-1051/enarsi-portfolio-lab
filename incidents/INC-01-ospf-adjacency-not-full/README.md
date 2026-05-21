@@ -2,22 +2,21 @@
 
 ## Summary
 - **Impact:** OSPF adjacency between BR1 and HQ1 does not reach **FULL**, causing missing OSPF-learned routes and degraded reachability.
-- **Symptom:** OSPF neighbor stuck in **EXSTART/EXCHANGE** (or flaps DOWN/INIT).
-- **Root cause:** **MTU mismatch** on the BR1↔HQ1 transit interface.
-- **Fix:** Align MTU on both ends (workaround: `ip ospf mtu-ignore`, but not recommended as a first choice).
-- **Prevention:** Add MTU checks to change/verification checklists and standardize interface MTU settings.
+- **Symptom:** OSPF neighbor stuck in **EXSTART/EXCHANGE** (or flaps).
+- **Root cause:** **MTU mismatch** on Tunnel0 (OSPF DBD exchange cannot complete).
+- **Fix:** Align MTU on both ends (workaround: `ip ospf mtu-ignore` is possible but not the first choice).
+- **Prevention:** Add MTU checks to verification/change checklists; standardize MTU values.
 
 ---
 
 ## Lab Context
+- **Baseline required:** `v0.2-ospf` (start from the OSPF baseline configs)
 - **Platform:** GNS3 (primary), Packet Tracer (supporting)
-- **Protocols:** OSPF (focus)
-- **Devices:** BR1 ↔ HQ1 (minimum required)
-
-> Topology/design references:
-- Routing design: `docs/routing-design.md`
-- Baseline verification: `docs/verification-checklist.md`
-- Command set: `docs/command-set.md`
+- **Devices:** HQ1 ↔ BR1 (minimum)
+- **Links:** 
+  - Routing design: `docs/routing-design.md`
+  - Baseline verification: `docs/verification-checklist.md`
+  - Command set: `docs/command-set.md`
 
 ---
 
@@ -25,29 +24,38 @@
 
 ### Expected
 - `show ip ospf neighbor` shows BR1↔HQ1 as **FULL**
-- BR1 learns expected OSPF routes (e.g., HQ/DC loopbacks)
+- BR1 learns expected OSPF routes (e.g., HQ1 loopback)
 
 ### Actual
-- Neighbor remains in **EXSTART/EXCHANGE** (or repeatedly resets)
+- Neighbor remains in **EXSTART/EXCHANGE**
 - Expected OSPF routes are missing or unstable
 
 ---
 
 ## Evidence (Files)
-- **Before (healthy baseline):** `evidence/incidents/INC-01/before.txt`
-- **Symptom (broken state):** `evidence/incidents/INC-01/symptom.txt`
-- **Investigation (analysis):** `evidence/incidents/INC-01/investigation.txt`
-- **Fix + Verify:** `evidence/incidents/INC-01/fix-verify.txt`
+Evidence:
+- `evidence/incidents/INC-01/01-baseline.txt`
+- `evidence/incidents/INC-01/02-fault-injection.txt`
+- `evidence/incidents/INC-01/03-symptom.txt`
+- `evidence/incidents/INC-01/04-investigation.txt`
+- `evidence/incidents/INC-01/05-fix-verify.txt`
 
-Configs:
-- HQ1 before: `configs/incidents/INC-01/HQ1-before.txt`
-- HQ1 after:  `configs/incidents/INC-01/HQ1-after.txt`
+Configs (delta only; baseline configs live under `configs/baseline/v0.2-ospf/`):
+- `configs/incidents/INC-01/HQ1-delta-before.txt`
+- `configs/incidents/INC-01/HQ1-delta-after.txt`
+- `configs/incidents/INC-01/BR1-delta-before.txt`
+- `configs/incidents/INC-01/BR1-delta-after.txt`
 
 ---
 
 ## Fault Injection (How I broke it)
+
 ### Change (intentional misconfig)
-Change MTU **only on HQ1** transit interface to create mismatch.
+Create an MTU mismatch by changing MTU **only on HQ1 Tunnel0**.
 
 **HQ1**
-
+```cisco
+conf t
+interface tunnel0
+ ip mtu 1400
+end
