@@ -1,11 +1,9 @@
 HQ1
-show ip ospf neighbor
+show interface tunnel0 | include MTU
 show ip ospf interface tunnel0 | include MTU|Area|Hello|Dead|Network Type|Authentication
-show ip route ospf | include 10.255.
-show logging | include OSPF|MTU|MISMATCH|AUTH
+show run interface tunnel0 | include ip mtu|ip ospf mtu-ignore|ip address|ospf
 
 BR1
-show ip ospf neighbor
+show interface tunnel0 | include MTU
 show ip ospf interface tunnel0 | include MTU|Area|Hello|Dead|Network Type|Authentication
-show ip route ospf | include 10.255.
-show logging | include OSPF|MTU|MISMATCH|AUTH
+show run interface tunnel0 | include ip mtu|ip ospf mtu-ignore|ip address|ospf
