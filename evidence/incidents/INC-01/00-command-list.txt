@@ -17,7 +17,15 @@ show run interface tunnel0 | include mtu|ip address|tunnel source|nhrp|ospf
 show ip ospf interface tunnel0 | include MTU|Hello|Dead|Area|Network Type
 
 # 03-symptom
+HQ1
+show interface tunnel0 | include MTU
+show ip ospf interface tunnel0 | include MTU|Area|Hello|Dead|Network Type|Authentication
+show run interface tunnel0 | include ip mtu|ip ospf mtu-ignore|ip address|ospf
 
+BR1
+show interface tunnel0 | include MTU
+show ip ospf interface tunnel0 | include MTU|Area|Hello|Dead|Network Type|Authentication
+show run interface tunnel0 | include ip mtu|ip ospf mtu-ignore|ip address|ospf
 
 # 04-investigation
 
