@@ -39,4 +39,14 @@ show ip ospf interface tunnel0 | include MTU|Area|Hello|Dead|Network Type|Authen
 show run interface tunnel0 | include ip mtu|ip ospf mtu-ignore|ip address|ospf
 
 # 05-fix-verify
+HQ1
+show run interface tunnel0 | include mtu|ospf
+show ip ospf neighbor
+show ip route ospf | include 10.255.
+ping 10.255.4.4 source lo0
 
+BR1
+show run interface tunnel0 | include mtu|ospf
+show ip ospf neighbor
+show ip route ospf | include 10.255.
+ping 10.255.1.1 source lo0
