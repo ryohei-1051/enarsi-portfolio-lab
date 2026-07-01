@@ -15,3 +15,12 @@ ping 10.255.1.1 source lo0
 HQ1
 show run interface tunnel0 | include mtu|ip address|tunnel source|nhrp|ospf
 show ip ospf interface tunnel0 | include MTU|Hello|Dead|Area|Network Type
+
+# 03-symptom
+
+
+# 04-investigation
+
+
+# 05-fix-verify
+
